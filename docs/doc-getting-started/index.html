@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="">
+  <meta name="keyword" content="">
+  <link rel="shortcut icon" type="image/ico" href="/documentation/images/logo-favicon.png"/> 
+  <title>
+    
+      Getting started | Aerographql
+    
+  </title>
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/documentation/css/style.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+</head>
+
+
+    <body>
+        <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/documentation/">
+      <img src="/documentation/images/logo-full.png">
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/documentation/" class="item-link">
+                Home
+                
+            </a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/documentation/docs/" class="item-link">
+                Documentations
+                
+            </a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/aerographql" class="item-link">
+                Github
+                
+                    <i>
+                        <img src="/documentation/images/logo-github.png">
+                    </i>
+                
+            </a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/documentation/" class="menu-link">
+                  Home
+                  
+              </a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/documentation/docs/" class="menu-link">
+                  Documentations
+                  
+              </a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/aerographql" class="menu-link">
+                  Github
+                  
+                    <i>
+                        <img src="/documentation/images/logo-github.png">
+                    </i>
+                  
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+        
+<div id="article-banner-spacer"></div>
+
+<main class="app-body flex-box">
+    <article class="post-article">
+        <section class="markdown-content">
+            <h1 id="Getting-started-with-AeroGraphQL"><a href="#Getting-started-with-AeroGraphQL" class="headerlink" title="Getting started with AeroGraphQL"></a>Getting started with AeroGraphQL</h1><p>This guide will provide you a step by step tutorial to setup a full GraphQL server that will provide an API to manipulate a multiple users todo list.</p>
+<p><em>In this tutorial, i’m using yarn, but this will of course work the same with npm.</em></p>
+<blockquote>
+<p>This tutorial assume you are already familiar with GraphQL schema definition and Typescript.<br>If you are not, first read <a href="http://graphql.org/learn/schema/" target="_blank" rel="noopener">this documentation</a> for the GraphQL part and <a href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html" target="_blank" rel="noopener">this introduction</a> for Typescript</p>
+</blockquote>
+<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>First setup a new nodejs project with <strong>Typescript</strong>.<br>We also install <a href="https://github.com/TypeStrong/ts-node" target="_blank" rel="noopener"><strong>ts-node</strong></a> as it will make our life easier later on.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mkdir todo</span><br><span class="line">cd todo</span><br><span class="line">yarn init</span><br><span class="line">yarn add typescript</span><br><span class="line">yarn add ts-node</span><br><span class="line">yarn add express</span><br><span class="line">yarn add @types/express</span><br><span class="line">yarn add body-parser</span><br><span class="line">yarn add @types/body-parser</span><br></pre></td></tr></table></figure>
+<p>Then create the following Typescript config file <strong>tsconfig.json</strong> at the root of your  project:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"compilerOptions"</span>: &#123;</span><br><span class="line">        <span class="string">"target"</span>: <span class="string">"es6"</span>,</span><br><span class="line">        <span class="string">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">        <span class="string">"moduleResolution"</span>: <span class="string">"node"</span>,</span><br><span class="line">        <span class="string">"sourceMap"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="string">"emitDecoratorMetadata"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="string">"experimentalDecorators"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="string">"noImplicitAny"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="string">"lib"</span>: [</span><br><span class="line">            <span class="string">"es6"</span>,</span><br><span class="line">            <span class="string">"dom"</span>,</span><br><span class="line">            <span class="string">"esnext.asynciterable"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"outDir"</span>: <span class="string">"./dist"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"include"</span>: [</span><br><span class="line">        <span class="string">"./src/**/*.ts"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The only noticable things here is the <strong>emitDecoratorMetadata</strong> and <strong>experimentalDecorators</strong> options which are needed as AeroGraphQL rely on decorators to define the GraphQL schema.</p>
+<p>Create a <strong>src</strong> directory and a <strong>main.ts</strong> file in this directory:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir src</span><br><span class="line">cd src</span><br><span class="line">touch main.ts</span><br></pre></td></tr></table></figure></p>
+<p>In your <strong>package.json</strong> add a script to run the server:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;start&quot;: &quot;ts-node ./src/main.ts&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Finally install <strong>aerographql-server</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add aerographql-server</span><br></pre></td></tr></table></figure>
+<h2 id="Create-a-simple-user-type"><a href="#Create-a-simple-user-type" class="headerlink" title="Create a simple user type"></a>Create a simple user type</h2><p>Now let’s write some code:</p>
+<p>First start by creating the user type definition in <strong>main.ts</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ObjectDefinition &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"></span><br><span class="line">@ObjectDefinition( &#123;</span><br><span class="line">    name: <span class="string">'User'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This will create a new Typesctipt class and will implicitly create the corresponding GraphQL object type.</p>
+<p>You may have noticed the <strong>name</strong> field in the decorators parameters:<br>It define the name of the GraphQL object this decorated class refers to.</p>
+<p>In this case, a GraphQL object with the name <strong>User</strong> will be created.</p>
+<blockquote>
+<hr>
+<ul>
+<li>@ObjectDefinition allow to declare a new GraphQL Type</li>
+<li>The graphql object name is defined by the name field of the decorator (Not the name of the class)</li>
+</ul>
+<hr>
+</blockquote>
+<h2 id="Declare-fields"><a href="#Declare-fields" class="headerlink" title="Declare fields"></a>Declare fields</h2><p>For now we just have empty objects, let’s add some fields to our user using the <strong>@Field</strong> decorator:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Field, ObjectDefinition, ObjectImplementation &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"></span><br><span class="line">@ObjectDefinition( &#123;</span><br><span class="line">    name: <span class="string">'User'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    @Field( &#123; <span class="attr">type</span>: <span class="string">'ID'</span> &#125;) id: string;</span><br><span class="line">    @Field() name: string = <span class="string">""</span>;</span><br><span class="line">    @Field() description: string = <span class="string">"Empty description"</span>;</span><br><span class="line">    @Field() age: number = <span class="number">0</span>;</span><br><span class="line">    @Field() admin: boolean = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>As you have noticed, the <strong>type</strong> field on the <strong>@Field</strong> decorator is optional.<br>Aerographql will try to guess it using it’s type annotation.</p>
+<p>This work well for string, number, boolean.<br>But for the <strong>id</strong> field, we like to tell GraphQL that this particular field is of type <strong>ID</strong>, so we overload the default type here.</p>
+<p>We could also use the <strong>ID</strong> type provided by AeroGraphQL instead of the <strong>‘ID’</strong> string, avoiding us the overload:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ID &#125; from &apos;aerographql-server&apos;;</span><br><span class="line">..</span><br><span class="line">   @Field( ) id: ID;</span><br><span class="line">..</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<hr>
+<ul>
+<li>@Field decorate allow to create a simple GraphQL field.</li>
+<li>@Field are only defined within an @ObjectDefinition class</li>
+</ul>
+<hr>
+</blockquote>
+<p><strong>On thing to note:</strong><br>At this point the typescript <strong>User</strong> class is perfectly valid and can be used as any regular javascript object:<br><code>let myUser = new User()</code><br>And you’ll have a brand new object representing a user, with all it’s fields already initialized…<br>This will be pretty usefull when implementing complex resolvers later on…</p>
+<h2 id="Create-the-Todo-object"><a href="#Create-the-Todo-object" class="headerlink" title="Create the Todo object"></a>Create the Todo object</h2><p>Using what we already know, let’s create the todo object the same way:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Field, ObjectDefinition &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"></span><br><span class="line">@ObjectDefinition( &#123;</span><br><span class="line">    name: <span class="string">'Todo'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">    @Field( &#123; <span class="attr">type</span>: <span class="string">'ID'</span> &#125;) id: string;</span><br><span class="line">    @Field() title: string = <span class="string">""</span>;</span><br><span class="line">    @Field() content: string = <span class="string">"Empty todo"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Pretty straightforward.</p>
+<h2 id="Create-our-first-resolver"><a href="#Create-our-first-resolver" class="headerlink" title="Create our first resolver"></a>Create our first resolver</h2><p>Now it would be nice if we could query every todo of a given user.</p>
+<p>To do that we need GraphQL <strong>resolvers</strong>.</p>
+<p>AeroGraphQL wrap GraphQL resolvers in an elegant way.<br>Let’s explore that:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Resolver, Arg, ObjectImplementation &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"></span><br><span class="line">@ObjectImplementation( &#123;</span><br><span class="line">    name: <span class="string">'User'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">UserImpl</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: Todo &#125; ) </span><br><span class="line">    todos( @Arg( &#123; <span class="attr">nullable</span>: <span class="literal">true</span> &#125;) search: string ) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This is a work in progress task, but let’s explain each parts:</p>
+<p>First, use <strong>@ObjectImplementation</strong> to declare a class that will act as a container storing each resolver associated with the GraphQL type specified in the <strong>name</strong> attributes.</p>
+<p>Then use the <strong>@Resolver</strong> decorator to declare a specific resolver.</p>
+<blockquote>
+<p>Reminder: In GraphQL a resolver is the method called to retrieve the value of a given field.</p>
+</blockquote>
+<p>The name of the field associated with this resolver is the name of the method, here <strong>todos</strong>.</p>
+<p>The type of this field is defined in the <strong>@Resolver</strong> parameter’s <strong>type</strong> attribute, here <strong>Todo</strong>.  </p>
+<p><em>Note that here we pass a class not a string.<br>We could also use string: <code>@Resolver( { type: &#39;Todo&#39; } )</code><br>While this sound similar, the first way is the prefered one, as it will be more easier for your IDE to refactor code and to track changes.</em></p>
+<p>Finally, we use the <strong>@Arg</strong> decorator to define an argument for this field:  </p>
+<ul>
+<li>The name of the argument in GraphQL will be the name of the argument as defined here in Typescript.</li>
+<li>It’s type will be infered by AeroGraphQL from the Typescript type annotation</li>
+<li>It will be a nullable parameter ( <strong>nullable: true</strong> )</li>
+</ul>
+<blockquote>
+<hr>
+<ul>
+<li>@Resolver decorator allow to create a field on a GraphQL object type and to provide it’s resolver implementation.</li>
+<li>@Resolver are only defined within an @Ibjectimplementation class</li>
+<li>@Arg decorator define an argument for the resolver.</li>
+</ul>
+<hr>
+</blockquote>
+<p>At this point the core implementation of this resolver is missing, we will come to that later on.</p>
+<h2 id="Create-a-RootQuery-type"><a href="#Create-a-RootQuery-type" class="headerlink" title="Create a RootQuery type:"></a>Create a RootQuery type:</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Field, ObjectImplementation &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"></span><br><span class="line">@ObjectImplementation( &#123;</span><br><span class="line">    name: <span class="string">'RootQuery'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RootQuery</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: User &#125; )</span><br><span class="line">    user( @Arg() name: string ): User | <span class="built_in">Promise</span>&lt;User&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here we define a new GraphQL Object <strong>RootQuery</strong> with just one field <strong>user</strong>.<br>It’s resolver will allow us to query for a given user using it’s name as parameter.</p>
+<blockquote>
+<p>Note that the type of this resolver is <strong>User</strong> this mean that this resolver will either return a plain User object or a promise on a User object</p>
+</blockquote>
+<h2 id="Create-the-schema"><a href="#Create-the-schema" class="headerlink" title="Create the schema"></a>Create the schema</h2><p>Now that all the pieces are here, let’s stitch them all together using a schema:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Schema &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"></span><br><span class="line">@Schema( &#123;</span><br><span class="line">    rootQuery: <span class="string">'RootQuery'</span>,</span><br><span class="line">    components: [ RootQuery, User, UserImpl, Todo ]</span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MySchema</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Here we declare a GraphQL shema composed of various components listed in the <strong>components</strong> array.</p>
+<p>Once again, pretty straightforward.<br>Note that except for the <strong>rootQuery</strong> attribute, everything is described using explicit types, once again, this will helps during refactoring times.</p>
+<h2 id="Expose-this-schema"><a href="#Expose-this-schema" class="headerlink" title="Expose this schema"></a>Expose this schema</h2><p>Now let’s expose this schema on a GraphQL server:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ApolloServer, BaseApolloServer &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> express <span class="keyword">from</span> <span class="string">'express'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> bodyParser <span class="keyword">from</span> <span class="string">'body-parser'</span>;</span><br><span class="line"></span><br><span class="line">@ApolloServer( &#123;</span><br><span class="line">    name: <span class="string">'Aerograph server'</span>,</span><br><span class="line">    schema: MySchema</span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> <span class="keyword">extends</span> <span class="title">BaseApolloServer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here we create a server based on Apollo server to expose our schema.</p>
+<p>Now let’s plug that into a traditional express application</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> server = <span class="keyword">new</span> Server();</span><br><span class="line"><span class="keyword">this</span>.app = express();</span><br><span class="line"><span class="keyword">this</span>.app.use( <span class="string">'/graphql'</span>, bodyParser.json(), server.getGraphQLMiddleware() );</span><br><span class="line"><span class="keyword">this</span>.app.use( <span class="string">'/graphiql'</span>, server.getGraphiQLMiddleware() );</span><br><span class="line"><span class="keyword">this</span>.app.listen( <span class="number">3000</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="string">'Up and running !'</span> );</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure>
+<h2 id="Implement-our-resolvers"><a href="#Implement-our-resolvers" class="headerlink" title="Implement our resolvers"></a>Implement our resolvers</h2><p>At this point, you could browse to <a href="http://localhost:3000/graphiql" target="_blank" rel="noopener">http://localhost:3000/graphiql</a> to explore our brand new GraphQL API ! Sweet :) </p>
+<p>Congratulation, you now have a GraphQL server up and running, let’s try to run some queries on it.<br>Try this one in graphiql:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user( name: &quot;Bob&quot;) &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This query will return the following error: <code>Cannot return null for non-nullable field RootQuery.user.</code></p>
+<p>To solve that, we are going to quickly implement the RootQuery.user resolver.</p>
+<p>First add a dummy list of users and then change our resolver implementation:<br><em>This user list would normally come from your Database using a dedicated service, we will come back to that in the next tutorial on using Dependencies Injection</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> users: User[] = [</span><br><span class="line">    &#123; <span class="attr">admin</span>: <span class="literal">false</span>, <span class="attr">age</span>: <span class="number">25</span>, <span class="attr">description</span>: <span class="string">'Description of Bob'</span>, <span class="attr">name</span>: <span class="string">'Bob'</span>, <span class="attr">id</span>: <span class="string">'0'</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">admin</span>: <span class="literal">true</span>, <span class="attr">age</span>: <span class="number">36</span>, <span class="attr">description</span>: <span class="string">'Description of Alice'</span>, <span class="attr">name</span>: <span class="string">'Alice'</span>, <span class="attr">id</span>: <span class="string">'1'</span>&#125;,</span><br><span class="line">    &#123; <span class="attr">admin</span>: <span class="literal">false</span>, <span class="attr">age</span>: <span class="number">28</span>, <span class="attr">description</span>: <span class="string">'Decription of Steeve'</span>, <span class="attr">name</span>: <span class="string">'Steeve'</span>, <span class="attr">id</span>: <span class="string">'3'</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Field, ObjectImplementation &#125; <span class="keyword">from</span> <span class="string">'aerographql-server'</span>;</span><br><span class="line"></span><br><span class="line">@ObjectImplementation( &#123;</span><br><span class="line">    name: <span class="string">'RootQuery'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RootQuery</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: User &#125; )</span><br><span class="line">    user( @Arg() name: string ): User | <span class="built_in">Promise</span>&lt;User&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> users.find( <span class="function"><span class="params">u</span> =&gt;</span> u.name === name );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Now re run the same previous query … ;) … this should now work.</p>
+<p>Now let’s try this query:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user( name: &quot;Bob&quot;) &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">    todos &#123;</span><br><span class="line">        title</span><br><span class="line">        content</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>You should get the following error: <code>Cannot return null for non-nullable field User.todos.</code></p>
+<p>Let’s implement the user’s todos resolver correctly</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> todos: &#123; [ key: string ]: Todo[] &#125; =</span><br><span class="line">    &#123;</span><br><span class="line">        Bob: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'0'</span>, <span class="attr">title</span>: <span class="string">'Todo1'</span>, <span class="attr">content</span>: <span class="string">'Bob Todo1 content'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'1'</span>, <span class="attr">title</span>: <span class="string">'Todo2'</span>, <span class="attr">content</span>: <span class="string">'Bob Todo2 content'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'2'</span>, <span class="attr">title</span>: <span class="string">'Todo3'</span>, <span class="attr">content</span>: <span class="string">'Bob Todo3 content'</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">        Alice: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'3'</span>, <span class="attr">title</span>: <span class="string">'Todo1'</span>, <span class="attr">content</span>: <span class="string">'Alice Todo1 content'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'4'</span>, <span class="attr">title</span>: <span class="string">'Todo2'</span>, <span class="attr">content</span>: <span class="string">'Alice Todo2 content'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'5'</span>, <span class="attr">title</span>: <span class="string">'Todo3'</span>, <span class="attr">content</span>: <span class="string">'Alice Todo3 content'</span> &#125; ],</span><br><span class="line">        Steeve: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'6'</span>, <span class="attr">title</span>: <span class="string">'Todo1'</span>, <span class="attr">content</span>: <span class="string">'Steeve Todo1 content'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'7'</span>, <span class="attr">title</span>: <span class="string">'Todo2'</span>, <span class="attr">content</span>: <span class="string">'Steeve Todo2 content'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'8'</span>, <span class="attr">title</span>: <span class="string">'Todo3'</span>, <span class="attr">content</span>: <span class="string">'Steeve Todo3 content'</span> &#125; ]</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">@ObjectImplementation( &#123;</span><br><span class="line">    name: <span class="string">'User'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">UserImpl</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: Todo, <span class="attr">list</span>: <span class="literal">true</span>&#125; )</span><br><span class="line">    todos( user: User, @Arg( &#123; <span class="attr">nullable</span>: <span class="literal">true</span> &#125; ) search: string ) &#123;</span><br><span class="line">        <span class="keyword">return</span> todos[user.name];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here we have defined a dummy todo list for each user.<br><em>Once again, this would normaly be fetched from your favorite database, for now we will use this simple stub.</em></p>
+<p>In the resolver itself, a few things have changed:</p>
+<ul>
+<li>First as this resolver return a list of Todo, we add the <strong>list: true</strong> attribute to the <strong>@Resolver</strong> decorator</li>
+<li>We added a first parameter to our resolver: <strong>name: User</strong>.<br>This first parameter will be the result of the previous resolver in the GraphQL resolution chain.<br>Here this will be the User returned by the RootQuery.user field.<br>Checkout this to learn more about <a href="http://graphql.org/learn/execution/#root-fields-resolvers" target="_blank" rel="noopener">GraphQL execution model</a></li>
+</ul>
+<p>Okay, there we are, now retry the previous query !</p>
+<p>Here is the result you should have:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;id&quot;: &quot;0&quot;,</span><br><span class="line">      &quot;name&quot;: &quot;Bob&quot;,</span><br><span class="line">      &quot;todos&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;title&quot;: &quot;Todo1&quot;,</span><br><span class="line">          &quot;content&quot;: &quot;Bob Todo1 content&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;title&quot;: &quot;Todo2&quot;,</span><br><span class="line">          &quot;content&quot;: &quot;Bob Todo2 content&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;title&quot;: &quot;Todo3&quot;,</span><br><span class="line">          &quot;content&quot;: &quot;Bob Todo3 content&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p><strong><em>Congratulation, you just setup your first AeroGraphQL server.</em></strong></p>
+<p>Has you might have seen through this tutorial, you have mainly worked with strongly typed data to define both your GraphQL Schema and it’s implementation.</p>
+<p>You know have a glimpse of what AeroGraphQL can bring over using GraphQL directly.</p>
+<ul>
+<li>Strongly typed system</li>
+<li>You can reuse defined type in your resolvers implementation</li>
+<li>Everything is in one place: both the GraphQL schema definition, the Typescript types definitions, and the resolvers implementations.</li>
+</ul>
+<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next"></a>What’s next</h2><p>Next tutorial will walk you through using dependencies injection system to enhance your resolver implementation…</p>
+
+        </section>
+    </article>
+    
+        <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Content</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Getting-started-with-AeroGraphQL"><span class="toc-nav-text">Getting started with AeroGraphQL</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Setup"><span class="toc-nav-text">Setup</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Create-a-simple-user-type"><span class="toc-nav-text">Create a simple user type</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Declare-fields"><span class="toc-nav-text">Declare fields</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Create-the-Todo-object"><span class="toc-nav-text">Create the Todo object</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Create-our-first-resolver"><span class="toc-nav-text">Create our first resolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Create-a-RootQuery-type"><span class="toc-nav-text">Create a RootQuery type:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Create-the-schema"><span class="toc-nav-text">Create the schema</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Expose-this-schema"><span class="toc-nav-text">Expose this schema</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Implement-our-resolvers"><span class="toc-nav-text">Implement our resolvers</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Conclusion"><span class="toc-nav-text">Conclusion</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#What’s-next"><span class="toc-nav-text">What’s next</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+
+    
+</main>
+
+<script>
+    (function () {
+        
+
+        // error image
+        $(".markdown-content img").on('error', function () {
+            $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+            $(this).css({
+                'cursor': 'default'
+            })
+        })
+
+        // zoom image
+        $(".markdown-content img").on('click', function () {
+            var src = $(this).attr('src')
+            if (src !== 'http://file.muyutech.com/error-img.png') {
+                var imageW = $(this).width()
+                var imageH = $(this).height()
+
+                var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+                zoom = zoom < 1 ? 1 : zoom
+                zoom = zoom > 2 ? 2 : zoom
+                var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+                $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="' +
+                    src + '" /></div></div>')
+                $('.image-view-wrap').addClass('wrap-active')
+                $('.image-view-wrap img').css({
+                    'width': `${imageW}`,
+                    'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+                })
+                $('html').css('overflow', 'hidden')
+
+                $('.image-view-wrap').on('click', function () {
+                    $(this).remove()
+                    $('html').attr('style', '')
+                })
+            }
+        })
+
+    })();
+</script>
+
+        <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+        <footer>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<script src="/documentation/js/script.js"></script>
+
+    </body>
+
+</html>
