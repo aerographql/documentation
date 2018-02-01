@@ -75,8 +75,10 @@ yarn add aerographql-server
 ```
 
 > Note that this will also install others AeroGraphQL packages:
+>
 > * aerographql-core
 > * aerographql-schema
+> 
 > Which will be used later on
 
 
@@ -104,7 +106,7 @@ It define the name of the GraphQL object this decorated class refers to.
 In this case, a GraphQL object with the name **User** will be created.
 
 > ---
-> * @ObjectDefinition allow to declare a new GraphQL Type
+> * **@ObjectDefinition** allow to declare a new GraphQL Type
 > * The graphql object name is defined by the name field of the decorator (Not the name of the class)
 > ---
 
@@ -141,8 +143,8 @@ import { ID } from 'aerographql-server';
 ```
 
 > ---
-> * @Field decorate allow to create a simple GraphQL field.
-> * @Field are only defined within an @ObjectDefinition class
+> * **@Field** decorate allow to create a simple GraphQL field.
+> * **@Field** are only defined within an @ObjectDefinition class
 > ---
 
 **On thing to note:**  
@@ -216,9 +218,9 @@ Finally, we use the **@Arg** decorator to define an argument for this field:
 
 
 > ---
-> * @Resolver decorator allow to create a field on a GraphQL object type and to provide it's resolver implementation.
-> * @Resolver are only defined within an @Ibjectimplementation class
-> * @Arg decorator define an argument for the resolver.
+> * **@Resolver** decorator allow to create a field on a GraphQL object type and to provide it's resolver implementation.
+> * **@Resolver** are only defined within an @Ibjectimplementation class
+> * **@Arg** decorator define an argument for the resolver.
 > ---
 
 At this point the core implementation of this resolver is missing, we will come to that later on.
@@ -429,7 +431,7 @@ Here is the result you should have:
 
 ***Congratulation, you just setup your first AeroGraphQL server.***
 
-Has you might have seen through this tutorial, you have mainly worked with strongly typed data to define both your GraphQL Schema and it's implementation.
+Has you might have seen through this tutorial, you have mainly worked with strongly typed data to define both your GraphQL Schema and theirs implementation.
 
 You know have a glimpse of what AeroGraphQL can bring over using GraphQL directly.
 
