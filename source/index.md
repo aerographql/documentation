@@ -18,7 +18,7 @@ toc: false
 
 * Organize and test your code easily with the provided dependecies injection system and the test utilities.
 
-* Run your server using the well known Apollo Server.
+* Run your server using the well known [Apollo Server](https://www.apollographql.com/docs/apollo-server/).
 
 # What it look like ?
 
