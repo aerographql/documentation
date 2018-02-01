@@ -1,0 +1,54 @@
+<header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="<%- url_for() %>">
+      <img src="<%=  config.logo %>">
+    </a>
+    <ul class="right-list">
+      <% for(name in config.menu) { %>
+        <li class="list-item">
+          <% if (url_for(config.menu[name].url) == '/' + path.replace('index.html', '') ) { %>
+            <a href="<%- url_for(config.menu[name].url) %>" class="item-link active">
+                <%- name %>
+            </a>
+          <% } else { %>
+            <a href="<%- url_for(config.menu[name].url) %>" class="item-link">
+                <%- name %>
+                <% if( config.menu[name].icon ) { %>
+                    <i>
+                        <img src="<%= config.menu[name].icon %>">
+                    </i>
+                <% } %>
+            </a>
+          <% } %>
+        </li>
+      <% } %>
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        <% for(name in config.menu) { %>
+          <li class="menu-item">
+            <% if (url_for(config.menu[name].url) == '/' + path.replace('/index.html', '') || (url_for(config.menu[name].url) == '/' && is_home())) { %>
+              <a href="<%- url_for(config.menu[name].url) %>" class="menu-link mobile-active">
+                  <%- name %>
+              </a>
+            <% } else { %>
+              <a href="<%- url_for(config.menu[name].url) %>" class="menu-link">
+                  <%- name %>
+                  <% if( config.menu[name].icon ) { %>
+                    <i>
+                        <img src="<%= config.menu[name].icon %>">
+                    </i>
+                  <% } %>
+              </a>
+            <% } %>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,59 @@
+# Site
+title: Aerographql
+subtitle:
+description:
+author: John Doe
+language:
+timezone:
+
+# URL
+url: https://aerographql.github.io/documentation/
+root: /documentation/
+permalink: :title/
+permalink_defaults:
+
+# Directory
+source_dir: source
+public_dir: ../docs
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+
+# Writing
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link: true
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace:
+
+# Date / Time format
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Extensions
+theme: aerograph
+
+
+# Theme Specific:
+menu:
+ Home: 
+    url: /
+ Documentations: 
+    url: /docs/
+ Github: 
+    url: https://github.com/aerographql
+    icon: /documentation/images/logo-github.png
+
+favicon: /documentation/images/logo-favicon.png
+logo:  /documentation/images/logo-full.png

@@ -1,0 +1,24 @@
+{
+    "name": "hexo-theme-aerograph",
+    "version": "1.4.0",
+    "description": ".",
+    "scripts": {
+        "setup": "npm cache clean && npm install",
+        "lint": "bash lint.sh"
+    },
+    "keywords": [
+        "hexo",
+        "theme"
+    ],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "standard": "^10.0.2"
+    },
+    "standard": {
+        "globals": [
+            "jQuery",
+            "NProgress"
+        ]
+    }
+}
