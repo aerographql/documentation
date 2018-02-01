@@ -129,8 +129,9 @@
 <p>Note that this will also install others AeroGraphQL packages:</p>
 <ul>
 <li>aerographql-core</li>
-<li>aerographql-schema<br>Which will be used later on</li>
+<li>aerographql-schema</li>
 </ul>
+<p>Which will be used later on</p>
 </blockquote>
 <h2 id="Create-a-simple-user-type"><a href="#Create-a-simple-user-type" class="headerlink" title="Create a simple user type"></a>Create a simple user type</h2><p>Now let’s write some code:</p>
 <p>First start by creating the user type definition in <strong>main.ts</strong>:</p>
@@ -141,7 +142,7 @@
 <blockquote>
 <hr>
 <ul>
-<li>@ObjectDefinition allow to declare a new GraphQL Type</li>
+<li><strong>@ObjectDefinition</strong> allow to declare a new GraphQL Type</li>
 <li>The graphql object name is defined by the name field of the decorator (Not the name of the class)</li>
 </ul>
 <hr>
@@ -154,8 +155,8 @@
 <blockquote>
 <hr>
 <ul>
-<li>@Field decorate allow to create a simple GraphQL field.</li>
-<li>@Field are only defined within an @ObjectDefinition class</li>
+<li><strong>@Field</strong> decorate allow to create a simple GraphQL field.</li>
+<li><strong>@Field</strong> are only defined within an @ObjectDefinition class</li>
 </ul>
 <hr>
 </blockquote>
@@ -185,9 +186,9 @@
 <blockquote>
 <hr>
 <ul>
-<li>@Resolver decorator allow to create a field on a GraphQL object type and to provide it’s resolver implementation.</li>
-<li>@Resolver are only defined within an @Ibjectimplementation class</li>
-<li>@Arg decorator define an argument for the resolver.</li>
+<li><strong>@Resolver</strong> decorator allow to create a field on a GraphQL object type and to provide it’s resolver implementation.</li>
+<li><strong>@Resolver</strong> are only defined within an @Ibjectimplementation class</li>
+<li><strong>@Arg</strong> decorator define an argument for the resolver.</li>
 </ul>
 <hr>
 </blockquote>
@@ -226,7 +227,7 @@
 <p>Okay, there we are, now retry the previous query !</p>
 <p>Here is the result you should have:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;id&quot;: &quot;0&quot;,</span><br><span class="line">      &quot;name&quot;: &quot;Bob&quot;,</span><br><span class="line">      &quot;todos&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;title&quot;: &quot;Todo1&quot;,</span><br><span class="line">          &quot;content&quot;: &quot;Bob Todo1 content&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;title&quot;: &quot;Todo2&quot;,</span><br><span class="line">          &quot;content&quot;: &quot;Bob Todo2 content&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;title&quot;: &quot;Todo3&quot;,</span><br><span class="line">          &quot;content&quot;: &quot;Bob Todo3 content&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p><strong><em>Congratulation, you just setup your first AeroGraphQL server.</em></strong></p>
-<p>Has you might have seen through this tutorial, you have mainly worked with strongly typed data to define both your GraphQL Schema and it’s implementation.</p>
+<p>Has you might have seen through this tutorial, you have mainly worked with strongly typed data to define both your GraphQL Schema and theirs implementation.</p>
 <p>You know have a glimpse of what AeroGraphQL can bring over using GraphQL directly.</p>
 <ul>
 <li>Strongly typed system</li>
