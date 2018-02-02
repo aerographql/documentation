@@ -28,6 +28,7 @@ yarn add express
 yarn add @types/express
 yarn add body-parser
 yarn add @types/body-parser
+yarn add apollo-server-express
 ```
 Then create the following Typescript config file **tsconfig.json** at the root of your  project:
 ```javascript
@@ -243,13 +244,13 @@ It's resolver will allow us to query for a given user using it's name as paramet
 
 Now that all the pieces are here, let's stitch them all together using a schema:
 ```javascript
-import { Schema } from 'aerographql-schema';
+import { Schema, BaseSchema } from 'aerographql-schema';
 
 @Schema( {
     rootQuery: 'RootQuery',
     components: [ RootQuery, User, UserImpl, Todo ]
 } )
-export class MySchema {
+export class MySchema extends BaseSchema{
 }
 ```
 
@@ -278,9 +279,8 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
 let mySchema = new MySchema();
-let server = new Server();
 this.app = express();
-this.app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema: graphqlExpress.graphQLSchema }) );
+this.app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema: mySchema.graphQLSchema }) );
 this.app.use( '/graphiql', graphiqlExpress({ endpointURL: '/graphql' } ) );
 this.app.listen( 3000, () => {
     console.log( 'Up and running !' );
