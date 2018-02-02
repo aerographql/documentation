@@ -103,4 +103,4 @@ With each resolvers automaticaly wired.
 
 # Where to go next ?
 
-Follow the {% post_link doc-getting-started Getting started guide %} to learn more on AeroGraphQL !
+Follow the {% post_link getting-started Getting started guide %} to learn more on AeroGraphQL !

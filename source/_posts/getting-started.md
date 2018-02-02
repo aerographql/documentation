@@ -13,6 +13,9 @@ This guide will provide you a step by step tutorial to setup a full GraphQL serv
 > This tutorial assume you are already familiar with GraphQL schema definition and Typescript.  
 If you are not, first read [this documentation](http://graphql.org/learn/schema/) for the GraphQL part and [this introduction](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) for Typescript
 
+
+**The full source code for this tutorial can be found {% post_link getting-started-code here %}**
+
 ## Setup
 
 First setup a new nodejs project with **Typescript**.  
@@ -123,7 +126,7 @@ export class User {
 }
 ```
 As you have noticed, the **type** field on the **@Field** decorator is optional.  
-Aerographql will try to guess it using it's type annotation.
+AeroGraphQL will try to guess it using it's type annotation.
 
 This work well for string, number, boolean.  
 But for the **id** field, we like to tell GraphQL that this particular field is of type **ID**, so we overload the default type here.
@@ -438,6 +441,7 @@ You know have a glimpse of what AeroGraphQL can bring over using GraphQL directl
 * Strongly typed system
 * You can reuse defined type in your resolvers implementation
 * Everything is in one place: both the GraphQL schema definition, the Typescript types definitions, and the resolvers implementations.
+
 
 ## What's next
 

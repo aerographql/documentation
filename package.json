@@ -6,7 +6,7 @@
     "version": "3.5.0"
   },
   "scripts": {
-    "build": "hexo generate",
+    "build": "rm -rf ./docs && hexo generate",
     "start": "nodemon -e md,ejs,styl  -x 'rm db.json; hexo serve' -w ./source -w ./themes"
   },
   "dependencies": {
