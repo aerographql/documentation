@@ -68,18 +68,11 @@ In your **package.json** add a script to run the server:
 }
 ```
 
-Finally install **aerographql-server**:
+Finally install **aerographql-schema**:
 
 ```
-yarn add aerographql-server
+yarn add aerographql-schema
 ```
-
-> Note that this will also install others AeroGraphQL packages:
->
-> * aerographql-core
-> * aerographql-schema
-> 
-> Which will be used later on
 
 
 ## Create a simple user type
@@ -136,7 +129,7 @@ But for the **id** field, we like to tell GraphQL that this particular field is 
 
 We could also use the **ID** type provided by AeroGraphQL instead of the **'ID'** string, avoiding us the overload:
 ```
-import { ID } from 'aerographql-server';
+import { ID } from 'aerographql-core';
 ..
    @Field( ) id: ID;
 ..
@@ -265,36 +258,43 @@ Here we declare a GraphQL shema composed of various components listed in the **c
 Once again, pretty straightforward.  
 Note that except for the **rootQuery** attribute, everything is described using explicit types, once again, this will helps during refactoring times.
 
+> ---
+> Components are any class annotated with the following AeroGraphQL decorators:
+> * **@ObjectDefinition**
+> * **@ObjectImplementation**
+> * **@Scalar**
+> * **@Interface**
+> * **@Input** 
+> ---
+
+
 ## Expose this schema 
 
-Now let's expose this schema on a GraphQL server:
+Now let's expose this schema using an [Apollo express server](https://www.apollographql.com/docs/apollo-server/):
 
 ```javascript
-import { ApolloServer, BaseApolloServer } from 'aerographql-server';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-@ApolloServer( {
-    name: 'Aerograph server',
-    schema: MySchema
-} )
-export class Server extends BaseApolloServer {
-
-}
-```
-Here we create a server based on Apollo server to expose our schema.
-
-Now let's plug that into a traditional express application
-
-```javascript
+let mySchema = new MySchema();
 let server = new Server();
 this.app = express();
-this.app.use( '/graphql', bodyParser.json(), server.getGraphQLMiddleware() );
-this.app.use( '/graphiql', server.getGraphiQLMiddleware() );
+this.app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema: graphqlExpress.graphQLSchema }) );
+this.app.use( '/graphiql', graphiqlExpress({ endpointURL: '/graphql' } ) );
 this.app.listen( 3000, () => {
     console.log( 'Up and running !' );
 } );
 ```
+
+> ---
+> They key point here is that AeroGraphQL provide you a valid GraphQL schema that can be directly provided to any GraphQL compliant server.  
+> This schema is automaticly builded with all it's resolver correctly wired, so just have to inject it.
+>
+> The BaseSchema expose 2 members:
+> * **graphQLSchema**: Which is the final GraphQL Schema to use
+> * rootInjector: Which will be used later on...
+> ---
 
 ## Implement our resolvers
 

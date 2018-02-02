@@ -62,32 +62,20 @@ Compose your Schema:
     rootQuery: 'RootQuery',
     components:[ UserType, RootQuery ]
 } )
-export class MySchema {
+export class MySchema extends BaseSchema {
 
 }
 
 ```
 
-Create your server using [Apollo Server](https://www.apollographql.com/docs/apollo-server/):
+Then plug this schema in your favorite GraphQL server.  
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/) with [Express](http://expressjs.com/fr/) my case:
 
 ```javascript
-@ApolloServer( {
-    name: 'Aerograph server',
-    schema:MySchema
-    providers: [ UserService ]
-} )
-export class Server extends BaseApolloServer {
-
-}
-```
-
-An finally inject your middleware in your express application:
-
-```javascript
+let mySchema = new MySchema();
 let server = new Server();
 this.app = express();
-this.app.use( '/graphql', bodyParser.json(), server.getGraphQLMiddleware() );
-this.app.use( '/graphiql', server.getGraphiQLMiddleware() );
+this.app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema: mySchema.graphQLSchema } );
 this.app.listen( config.get( 'server.port' ), () => {
     console.log( 'Up and running !' );
 } );
