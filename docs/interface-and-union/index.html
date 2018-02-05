@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="">
+  <meta name="keyword" content="">
+  <link rel="shortcut icon" type="image/ico" href="/documentation/images/logo-favicon.png"/> 
+  <title>
+    
+      Interface and Union | Aerographql
+    
+  </title>
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/documentation/css/style.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+</head>
+
+
+    <body>
+        <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/documentation/">
+      <img src="/documentation/images/logo-full.png">
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/documentation/" class="item-link">
+                Home
+                
+            </a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/documentation/docs/" class="item-link">
+                Documentations
+                
+            </a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/aerographql" class="item-link">
+                Github
+                
+                    <i>
+                        <img src="/documentation/images/logo-github.png">
+                    </i>
+                
+            </a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/documentation/" class="menu-link">
+                  Home
+                  
+              </a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/documentation/docs/" class="menu-link">
+                  Documentations
+                  
+              </a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/aerographql" class="menu-link">
+                  Github
+                  
+                    <i>
+                        <img src="/documentation/images/logo-github.png">
+                    </i>
+                  
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+        
+<div id="article-banner-spacer"></div>
+
+<main class="app-body flex-box">
+    <article class="post-article">
+        <section class="markdown-content">
+            <h1 id="Interface-and-Union"><a href="#Interface-and-Union" class="headerlink" title="Interface and Union"></a>Interface and Union</h1><p>This tutorial follow the <a href="/documentation/getting-started/" title="previous one">previous one</a> to add support for GraphQL Interface and Union.</p>
+<p>We’ll use the final source code of the <a href="/documentation/getting-started-code/" title="previous tutorial">previous tutorial</a> to start this new one.</p>
+<p>If you don’t know what GraphQL Interface and Input are, read this documentation beforehand:  </p>
+<ul>
+<li><a href="http://graphql.org/learn/schema/#interfaces" target="_blank" rel="noopener">Official GraphQL doc for Interface</a></li>
+<li><a href="http://graphql.org/learn/schema/#input-types" target="_blank" rel="noopener">Official GraphQL doc for Input</a></li>
+</ul>
+<p>We will enhance our Todo list by adding two type of Todo:</p>
+<ul>
+<li>Ponctual Todo</li>
+<li>Recurent Todo</li>
+</ul>
+<p>We will use <strong>Interface</strong> to declare a common base between those two inputs.</p>
+<p><strong>The full source code for this tutorial can be found <a href="/documentation/interface-and-union-code/" title="here">here</a></strong></p>
+<h2 id="Setup-our-Interface"><a href="#Setup-our-Interface" class="headerlink" title="Setup our Interface"></a>Setup our Interface</h2><p>First let’s transform the Todo ObjectDefinition to an Iterface.<br>We will use the <strong>@Interface</strong> decorator here:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@Interface( &#123;</span><br><span class="line">    name: <span class="string">'Todo'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">    @Field( &#123; <span class="attr">type</span>: <span class="string">'ID'</span> &#125; ) id: string;</span><br><span class="line">    @Field() title: string = <span class="string">""</span>;</span><br><span class="line">    @Field() content: string = <span class="string">"Empty todo"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then let’s define both our PonctualTodo and Recurent Todo:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@ObjectDefinition( &#123; <span class="attr">implements</span>: [Todo]  &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">PonctualTodo</span> </span>&#123;</span><br><span class="line">    @Field( &#123; <span class="attr">type</span>: <span class="string">'ID'</span> &#125; ) id: string;</span><br><span class="line">    @Field() title: string = <span class="string">""</span>;</span><br><span class="line">    @Field() content: string = <span class="string">"Empty todo"</span>;</span><br><span class="line">    @Field() date: string = <span class="string">"Date"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@ObjectDefinition( &#123; <span class="attr">implements</span>: [Todo]  &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RecurentTodo</span> </span>&#123;</span><br><span class="line">    @Field( &#123; <span class="attr">type</span>: <span class="string">'ID'</span> &#125; ) id: string;</span><br><span class="line">    @Field() title: string = <span class="string">""</span>;</span><br><span class="line">    @Field() content: string = <span class="string">"Empty todo"</span>;</span><br><span class="line">    @Field() occurence: string = <span class="string">"Date"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here, we use the <strong>implements</strong> field of the <strong>@ObjectDefinition</strong> to define which interface is implemented by each types.</p>
+<blockquote>
+<p>Note that the <strong>implements</strong> field is also present on the <strong>@ObjectImplementation</strong></p>
+<p>Also note that the <strong>name</strong> field on both type is <em>not</em> specified.<br>In this case, AeroGraphQL will infer the GraphQL name from the Typescript class name.<br>Here the GraphQL name will be RecurentTodo and PonctualTodo.</p>
+</blockquote>
+<h2 id="Wire-them-in-the-Schema"><a href="#Wire-them-in-the-Schema" class="headerlink" title="Wire them in the Schema:"></a>Wire them in the Schema:</h2><p>Don’t forget to add those new type in the schema components:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Schema( &#123;</span><br><span class="line">    rootQuery: <span class="string">'RootQuery'</span>,</span><br><span class="line">    components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ]</span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MySchema</span> <span class="keyword">extends</span> <span class="title">BaseSchema</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Update-the-fake-database"><a href="#Update-the-fake-database" class="headerlink" title="Update the fake database:"></a>Update the fake database:</h2><p>Update our fake database with the new fields:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> todos: &#123; [ key: string ]: (PonctualTodo | RecurentTodo) [] &#125; =</span><br><span class="line">    &#123;</span><br><span class="line">        Bob: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'0'</span>, <span class="attr">title</span>: <span class="string">'Todo1'</span>, <span class="attr">content</span>: <span class="string">'Bob Todo1 content'</span>, <span class="attr">occurence</span>: <span class="string">'Every Week'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'1'</span>, <span class="attr">title</span>: <span class="string">'Todo2'</span>, <span class="attr">content</span>: <span class="string">'Bob Todo2 content'</span>, <span class="attr">date</span>: <span class="string">'Friday'</span>  &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'2'</span>, <span class="attr">title</span>: <span class="string">'Todo3'</span>, <span class="attr">content</span>: <span class="string">'Bob Todo3 content'</span>, <span class="attr">occurence</span>: <span class="string">'Every Day'</span>  &#125;</span><br><span class="line">        ],</span><br><span class="line">        Alice: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'3'</span>, <span class="attr">title</span>: <span class="string">'Todo1'</span>, <span class="attr">content</span>: <span class="string">'Alice Todo1 content'</span>, <span class="attr">date</span>: <span class="string">'Mondy'</span>  &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'4'</span>, <span class="attr">title</span>: <span class="string">'Todo2'</span>, <span class="attr">content</span>: <span class="string">'Alice Todo2 content'</span>, <span class="attr">date</span>: <span class="string">'Saturday'</span>  &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'5'</span>, <span class="attr">title</span>: <span class="string">'Todo3'</span>, <span class="attr">content</span>: <span class="string">'Alice Todo3 content'</span>, <span class="attr">occurence</span>: <span class="string">'Every Week'</span>  &#125; ],</span><br><span class="line">        Steeve: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'6'</span>, <span class="attr">title</span>: <span class="string">'Todo1'</span>, <span class="attr">content</span>: <span class="string">'Steeve Todo1 content'</span>, <span class="attr">occurence</span>: <span class="string">'Every Month'</span>  &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'7'</span>, <span class="attr">title</span>: <span class="string">'Todo2'</span>, <span class="attr">content</span>: <span class="string">'Steeve Todo2 content'</span>, <span class="attr">date</span>: <span class="string">'Tuesday'</span>  &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="string">'8'</span>, <span class="attr">title</span>: <span class="string">'Todo3'</span>, <span class="attr">content</span>: <span class="string">'Steeve Todo3 content'</span>, <span class="attr">occurence</span>: <span class="string">'Every Day'</span>  &#125; ]</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<p><strong> That’s it ! </strong> </p>
+<p>You can now query you GraphQL server using <a href="http://graphql.org/learn/queries/#fragments" target="_blank" rel="noopener">GraphQL query fragment</a> to allow polymorphism such as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user( name:&quot;Bob&quot;) &#123;</span><br><span class="line">    id</span><br><span class="line">    todos &#123;</span><br><span class="line">      id</span><br><span class="line">      __typename</span><br><span class="line">      ... on PonctualTodo &#123;</span><br><span class="line">        date</span><br><span class="line">      &#125;</span><br><span class="line">      ... on RecurentTodo &#123;</span><br><span class="line">        occurence</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>which should return:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;id&quot;: &quot;0&quot;,</span><br><span class="line">      &quot;todos&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;id&quot;: &quot;0&quot;,</span><br><span class="line">          &quot;__typename&quot;: &quot;RecurentTodo&quot;,</span><br><span class="line">          &quot;occurence&quot;: &quot;Every Week&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;id&quot;: &quot;1&quot;,</span><br><span class="line">          &quot;__typename&quot;: &quot;PonctualTodo&quot;,</span><br><span class="line">          &quot;date&quot;: &quot;Friday&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;id&quot;: &quot;2&quot;,</span><br><span class="line">          &quot;__typename&quot;: &quot;RecurentTodo&quot;,</span><br><span class="line">          &quot;occurence&quot;: &quot;Every Day&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="How-does-it-work"><a href="#How-does-it-work" class="headerlink" title="How does it work ?"></a>How does it work ?</h2><p>If you have experiences with GraphQL you might be asking, but you do we guess the type of each particular items ?<br>After all they are just plain Javascript object, without anything special…</p>
+<p>Well AeroGraphQL add it’s own logic to deduce the Type of a given object.</p>
+<p>It will try several approach to guess it:</p>
+<ol>
+<li><p>If the returned value was created using the <strong>new operator</strong> on an object annotated with either @ObjectDefinition or @ObjectImplementation, then AeroGraphQL will look for specific metadata to infer the type.</p>
+</li>
+<li><p>If ther returned value was a literal javascript object, AeroGraphQL will look for a special field called <strong>__typename</strong> containing … the type name</p>
+</li>
+<li><p>If the __typename does not exits, AeroGraphQL will look for a <strong>customResolveType</strong> field in the <strong>@Interface</strong> or <strong>@Union</strong> decorator configuration for a function with the following signature: <code>type ResolveTypeFunction = ( value: any, context: any, info: any ) =&gt; string;</code>.<br>The implementer should write the function with the approriate logic to detect the object type from the <em>value</em> parameter</p>
+</li>
+<li><p>And finally, if neither <strong>__typename</strong> nor <strong>customResolveType</strong> was provided, AeroGraphQL will use a simple heuristic to find it’s type by analyzing the shape of each type implementing a common interface and by finding a unique field on each type that could be used as a discriminant to infer the object’s type.<br>This is what happen here.<br><em>This is one point that make AeroGraphQL easy to use</em><br><strong>This computation happen at Startup, so there is nearly zero overhead for that.</strong></p>
+</li>
+</ol>
+
+        </section>
+    </article>
+    
+        <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Content</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Interface-and-Union"><span class="toc-nav-text">Interface and Union</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Setup-our-Interface"><span class="toc-nav-text">Setup our Interface</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Wire-them-in-the-Schema"><span class="toc-nav-text">Wire them in the Schema:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Update-the-fake-database"><span class="toc-nav-text">Update the fake database:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#How-does-it-work"><span class="toc-nav-text">How does it work ?</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+
+    
+</main>
+
+<script>
+    (function () {
+        
+
+        // error image
+        $(".markdown-content img").on('error', function () {
+            $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+            $(this).css({
+                'cursor': 'default'
+            })
+        })
+
+        // zoom image
+        $(".markdown-content img").on('click', function () {
+            var src = $(this).attr('src')
+            if (src !== 'http://file.muyutech.com/error-img.png') {
+                var imageW = $(this).width()
+                var imageH = $(this).height()
+
+                var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+                zoom = zoom < 1 ? 1 : zoom
+                zoom = zoom > 2 ? 2 : zoom
+                var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+                $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="' +
+                    src + '" /></div></div>')
+                $('.image-view-wrap').addClass('wrap-active')
+                $('.image-view-wrap img').css({
+                    'width': `${imageW}`,
+                    'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+                })
+                $('html').css('overflow', 'hidden')
+
+                $('.image-view-wrap').on('click', function () {
+                    $(this).remove()
+                    $('html').attr('style', '')
+                })
+            }
+        })
+
+    })();
+</script>
+
+        <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+        <footer>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<script src="/documentation/js/script.js"></script>
+
+    </body>
+
+</html>

@@ -25,14 +25,9 @@ We also install [**ts-node**](https://github.com/TypeStrong/ts-node) as it will 
 mkdir todo
 cd todo
 yarn init
-yarn add typescript
-yarn add ts-node
-yarn add express
-yarn add @types/express
-yarn add body-parser
-yarn add @types/body-parser
-yarn add apollo-server-express
+yarn add typescript ts-node express @types/express body-parser @types/body-parser apollo-server-express
 ```
+
 Then create the following Typescript config file **tsconfig.json** at the root of your  project:
 ```javascript
 {
@@ -79,7 +74,7 @@ yarn add aerographql-schema
 ```
 
 
-## Create a simple user type
+## Create the User object type
 
 Now let's write some code:
 
@@ -151,7 +146,7 @@ And you'll have a brand new object representing a user, with all it's fields alr
 This will be pretty usefull when implementing complex resolvers later on...
 
 
-## Create the Todo object
+## Create the Todo object type
 
 Using what we already know, let's create the todo object the same way:
 
@@ -169,7 +164,7 @@ export class Todo {
 ```
 Pretty straightforward.
 
-## Create our first resolver
+## Create the User implementation
 
 Now it would be nice if we could query every todo of a given user.
 
@@ -222,7 +217,7 @@ Finally, we use the **@Arg** decorator to define an argument for this field:
 
 At this point the core implementation of this resolver is missing, we will come to that later on.
 
-## Create a RootQuery type:
+## Create the RootQuery object type
 ```javascript
 import { Field, ObjectImplementation } from 'aerographql-schema';
 
@@ -445,4 +440,4 @@ You know have a glimpse of what AeroGraphQL can bring over using GraphQL directl
 
 ## What's next
 
-Next tutorial will walk you through using dependencies injection system to enhance your resolver implementation...
+Next {% post_link interface-and-union tutorial %} will walk you through using Interface and Union to enhance your schema...
