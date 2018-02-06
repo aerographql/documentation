@@ -1,10 +1,7 @@
 # Site
 title: Aerographql
-subtitle:
-description:
-author: John Doe
-language:
-timezone:
+description: This is the documentation of AeroGraphQL. AeroGraphQL is an opinionated Typescript framework to create GraphQL server using a declarative approach. 
+keyword: node graphql typescript documentation
 
 # URL
 url: https://aerographql.github.io/documentation/
