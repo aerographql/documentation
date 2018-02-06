@@ -69,11 +69,10 @@ export class MySchema extends BaseSchema {
 ```
 
 Then plug this schema in your favorite GraphQL server.  
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/) with [Express](http://expressjs.com/fr/) my case:
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/) with [Express](http://expressjs.com/fr/) in this case:
 
 ```javascript
 let mySchema = new MySchema();
-let server = new Server();
 this.app = express();
 this.app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema: mySchema.graphQLSchema } );
 this.app.listen( config.get( 'server.port' ), () => {

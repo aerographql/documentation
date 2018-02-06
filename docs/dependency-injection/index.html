@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="">
+  <meta name="keyword" content="">
+  <link rel="shortcut icon" type="image/ico" href="/documentation/images/logo-favicon.png"/> 
+  <title>
+    
+      Dependency injection | Aerographql
+    
+  </title>
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/documentation/css/style.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+</head>
+
+
+    <body>
+        <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/documentation/">
+      <img src="/documentation/images/logo-full.png">
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/documentation/" class="item-link">
+                Home
+                
+            </a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/documentation/docs/" class="item-link">
+                Documentations
+                
+            </a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/aerographql" class="item-link">
+                Github
+                
+                    <i>
+                        <img src="/documentation/images/logo-github.png">
+                    </i>
+                
+            </a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/documentation/" class="menu-link">
+                  Home
+                  
+              </a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/documentation/docs/" class="menu-link">
+                  Documentations
+                  
+              </a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/aerographql" class="menu-link">
+                  Github
+                  
+                    <i>
+                        <img src="/documentation/images/logo-github.png">
+                    </i>
+                  
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+        
+<div id="article-banner-spacer"></div>
+
+<main class="app-body flex-box">
+    <article class="post-article">
+        <section class="markdown-content">
+            <h1 id="Dependency-injection"><a href="#Dependency-injection" class="headerlink" title="Dependency injection"></a>Dependency injection</h1><p>This tutorial follow the <a href="/documentation/interface-and-union/" title="previous one">previous one</a> and will teach you how to use the dependency injection system of AeroGraphQL to enhance your resolvers and make your code DRY.</p>
+<p>We’ll use the final source code of the <a href="/documentation/code/interface-and-union/" title="previous tutorial">previous tutorial</a> to start this new one.</p>
+<p><strong>The full source code for this tutorial can be found <a href="/documentation/code/dependency-injection/" title="here">here</a></strong></p>
+<h2 id="Why-do-we-need-Dependency-Injection"><a href="#Why-do-we-need-Dependency-Injection" class="headerlink" title="Why do we need Dependency Injection"></a>Why do we need Dependency Injection</h2><p>Let’s have a look at the current implementation of our RootQuery User’s resolver:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@ObjectImplementation( &#123; <span class="attr">name</span>: <span class="string">'RootQuery'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RootQuery</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: User &#125; )</span><br><span class="line">    user( @Arg() name: string ): User | <span class="built_in">Promise</span>&lt;User&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> users.find( <span class="function"><span class="params">u</span> =&gt;</span> u.name === name );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Actually, this method rely on a global variable <em>users</em> to implement it’s business logic.  </p>
+<p>But what happen if this business logic become bigger and more complex ?</p>
+<p>What if some pieces of this logic have to be shared with other resolvers ?</p>
+<p>This is where Dependency Injection comes in !</p>
+<blockquote>
+<p>Dependency injection allow you to define pieces of reusable code that can be shared between your resolvers.<br>Those pieces of code can depends on each other forming a dependency tree resolved by AeroGraphQL.  </p>
+</blockquote>
+<p>Most of the time, you will use DI (Dependency Injection) to create services.</p>
+<h2 id="Writing-the-service-and-injecting-it"><a href="#Writing-the-service-and-injecting-it" class="headerlink" title="Writing the service and injecting it"></a>Writing the service and injecting it</h2><p>We start by writing the service itself:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; <span class="keyword">from</span> <span class="string">'aerographql-core'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable() </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">    find( name: string ) &#123;</span><br><span class="line">        <span class="keyword">return</span> users.find( <span class="function"><span class="params">u</span> =&gt;</span> u.name === name );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>One thing to note: we use the <strong>@Injectable</strong> decorator on our class.<br>This decorator will force Typescript to emit metadata that will be use by AeroGraphQL internally.  </p>
+<p>Now let’s change our RootQuery to use a new <strong>UserService</strong> that will handle all the database communication logic:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@ObjectImplementation( &#123; <span class="attr">name</span>: <span class="string">'RootQuery'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RootQuery</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>( private userService: UserService ) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: User &#125; )</span><br><span class="line">    user( @Arg() name: string ): User | <span class="built_in">Promise</span>&lt;User&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.userService.find( name );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here, we just tell the RootQuery class, that it depend on a depency called <strong>UserService</strong>.<br>This dependency will be automaticly injected into the root query class instance when needed.</p>
+<p><em>This automatic resolution was possible because the UserService was decorated with he <strong>@Injectable</strong> decorator.</em></p>
+<blockquote>
+<hr>
+<ul>
+<li>To define a dependency simply add a constructor to the desired class, and add to that constructor a parameter matching the desired dependency.  </li>
+<li>AeroGraphQL will use the Typescript type annotation to correctly instanciate and inject the dependency.  </li>
+</ul>
+<hr>
+</blockquote>
+<p><strong> AeroGraphQL DI system is heavily inspired by the <a href="https://angular.io/guide/dependency-injection" target="_blank" rel="noopener">Angular DI system</a> </strong></p>
+<p>To make this example fully operational, we need to inform AeroGraphQL how and <strong>what</strong> to inject when someone is requesting the <strong>UserService</strong> dependency.</p>
+<p>This is done by configuring the <strong>Injector</strong></p>
+<h2 id="Configure-the-injector"><a href="#Configure-the-injector" class="headerlink" title="Configure the injector"></a>Configure the injector</h2><p>The injector is an object that act as a container for each dependency in the system.</p>
+<p>Before beeing used, dependencies must be registered within this injector.</p>
+<blockquote>
+<p>It’s not necessary to explicitly create an Injector manually to use the DI system.<br>In fact, <strong>each AeroGraphQL Schema store internaly an instance of an injector</strong> ( checkout the <a href="https://github.com/aerographql/packages/blob/master/packages/schema/src/schema/base-schema.ts" target="_blank" rel="noopener">BaseSchema</a> class )<br>Most of the time you won’t have to work with the injector directly.</p>
+</blockquote>
+<p>To configure an Injector, you must provide it a list of <strong>Providers</strong>.<br>A provider is something that will tell the injector how to <em>provide</em> a given dependency to classes asking for it.</p>
+<p>A list of providers can be passed to the AeroGraphQL schema in order to configure it’s own injector:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Schema( &#123;</span><br><span class="line">    rootQuery: &apos;RootQuery&apos;,</span><br><span class="line">    components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ],</span><br><span class="line">    providers: [ UserService ]</span><br><span class="line">&#125; )</span><br><span class="line">export class MySchema extends BaseSchema &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<hr>
+<p>We use the <strong>providers</strong> field of the <strong>@Schema</strong> decorator to pass additional provider to the internal Schema Injector</p>
+<hr>
+</blockquote>
+<h3 id="The-provider-object"><a href="#The-provider-object" class="headerlink" title="The provider object"></a>The provider object</h3><p>Here we directly pass the <strong>UserService</strong> class as a provider.<br>Like with the Angular DI system, this is a shorthand for a more complete syntax using a provider object :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Schema( &#123;</span><br><span class="line">    rootQuery: &apos;RootQuery&apos;,</span><br><span class="line">    components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ],</span><br><span class="line">    providers: [ &#123; token: &apos;UserService&apos;, factory: UserService &#125; ]</span><br><span class="line">&#125; )</span><br><span class="line">export class MySchema extends BaseSchema &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>{ token: &#39;UserService&#39;, factory: UserService }</code> is the provider object.</p>
+<p>What’s interesting here, is that it open the door for swapping out, or replacing implementation of a given Service:<br>Imagine that you have two implementations of the UserService:</p>
+<ul>
+<li>One for a mongodb backend</li>
+<li>One for a PostgresSQL backend</li>
+</ul>
+<p>Using the DI system you can configure your whole application to use a specific implementation without even changin a single line of code in any class that depend on this dependency:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// For a dependency identified by the &apos;UserService&apos; token, provide the Mongodb implementation</span><br><span class="line">@Schema( &#123;</span><br><span class="line">...</span><br><span class="line">    providers: [ &#123; token: &apos;UserService&apos;, factory: MongoDBUserService &#125; ]</span><br><span class="line">&#125; )</span><br><span class="line">// or, for that same token provide an other implementation:</span><br><span class="line">@Schema( &#123;</span><br><span class="line">...</span><br><span class="line">    providers: [ &#123; token: &apos;UserService&apos;, factory: PostgresUserService &#125; ]</span><br><span class="line">&#125; )</span><br></pre></td></tr></table></figure>
+<h2 id="More-on-providers"><a href="#More-on-providers" class="headerlink" title="More on providers"></a>More on providers</h2><h3 id="Factory-providers"><a href="#Factory-providers" class="headerlink" title="Factory providers"></a>Factory providers</h3><p>Until now, we have used <strong>Factory providers</strong>.  </p>
+<p>When the injector is created, each factory provider will create a new instance it using the factory provided using the <strong>new operator</strong>.  </p>
+<p>In our case, the following provider: <code>UserService</code> (which is equal to <code>{ token: &#39;UserService&#39;, factory: UserService }</code> ) will result in an instance of UserService created like this: <code>instance = new UserService( depsA, depsB )</code> where depsA and depsB are other <em>imaginary</em> dependencies created beforehand. </p>
+<blockquote>
+<p>There is only one single instance of a given dependency in an injector. This dependency is created at startup time</p>
+</blockquote>
+<h3 id="Value-providers"><a href="#Value-providers" class="headerlink" title="Value providers"></a>Value providers</h3><p>AeroGraphQL DI system also offer an other type of provider: <strong>Value providers</strong>.</p>
+<p>This allow you to pass any kind of Javascript object as a dependency.</p>
+<p>This kind of provider won’t be <em>instanciated</em> with the new operator like a factory provider.</p>
+<p>Here is how to pass a single value as a provider:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Inject &#125; <span class="keyword">from</span> <span class="string">'aerographql-core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// First configure the schema internal injector</span></span><br><span class="line"></span><br><span class="line">@Schema( &#123;</span><br><span class="line">    rootQuery: <span class="string">'RootQuery'</span>,</span><br><span class="line">    components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ],</span><br><span class="line">    providers: [ &#123; <span class="attr">token</span>: <span class="string">'DBConfig'</span>, <span class="attr">value</span>: &#123; <span class="attr">config</span>: &#123; <span class="attr">mongoDBIP</span>: <span class="string">'127.0.0.1'</span>, <span class="attr">mongoDBPort</span>: <span class="number">27017</span> &#125; &#125; &#125; ]</span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MySchema</span> <span class="keyword">extends</span> <span class="title">BaseSchema</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Then inject this dependency somewhere</span></span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBUserService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>( @Inject('DBConfig') private config: any ) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Note the use of the <strong>@Inject</strong> decorator to tell the DI system which dependency to inject.</p>
+<p>In the previous case, we use a simpler syntax:<br><code>constructor( private userService: UserService )</code> because UserService is a <strong>class</strong> AeroGraphQL was able to infer which dependency to inject by using the generated Typesctipt metadata.</p>
+<p>But when the dependency is not a class, we must explicitly tell the DI system which token to lookup for this dependency.</p>
+<p>In fact the previous syntax is a shorthand for the full one:<br><code>constructor( @Inject(&#39;UserService&#39;) private userService: UserService )</code></p>
+<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next"></a>What’s next</h2><p>Next <a href="/documentation/middleware/" title="tutorial">tutorial</a> will walk you through using middleware to implement authentification..</p>
+
+        </section>
+    </article>
+    
+        <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Content</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Dependency-injection"><span class="toc-nav-text">Dependency injection</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Why-do-we-need-Dependency-Injection"><span class="toc-nav-text">Why do we need Dependency Injection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Writing-the-service-and-injecting-it"><span class="toc-nav-text">Writing the service and injecting it</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Configure-the-injector"><span class="toc-nav-text">Configure the injector</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#The-provider-object"><span class="toc-nav-text">The provider object</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#More-on-providers"><span class="toc-nav-text">More on providers</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Factory-providers"><span class="toc-nav-text">Factory providers</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Value-providers"><span class="toc-nav-text">Value providers</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#What’s-next"><span class="toc-nav-text">What’s next</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+
+    
+</main>
+
+<script>
+    (function () {
+        
+
+        // error image
+        $(".markdown-content img").on('error', function () {
+            $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+            $(this).css({
+                'cursor': 'default'
+            })
+        })
+
+        // zoom image
+        $(".markdown-content img").on('click', function () {
+            var src = $(this).attr('src')
+            if (src !== 'http://file.muyutech.com/error-img.png') {
+                var imageW = $(this).width()
+                var imageH = $(this).height()
+
+                var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+                zoom = zoom < 1 ? 1 : zoom
+                zoom = zoom > 2 ? 2 : zoom
+                var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+                $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="' +
+                    src + '" /></div></div>')
+                $('.image-view-wrap').addClass('wrap-active')
+                $('.image-view-wrap img').css({
+                    'width': `${imageW}`,
+                    'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+                })
+                $('html').css('overflow', 'hidden')
+
+                $('.image-view-wrap').on('click', function () {
+                    $(this).remove()
+                    $('html').attr('style', '')
+                })
+            }
+        })
+
+    })();
+</script>
+
+        <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+        <footer>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<script src="/documentation/js/script.js"></script>
+
+    </body>
+
+</html>

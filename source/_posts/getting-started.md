@@ -8,18 +8,18 @@ toc: true
 
 This guide will provide you a step by step tutorial to setup a full GraphQL server that will provide an API to manipulate a multiple users todo list.
 
-*In this tutorial, i'm using yarn, but this will of course work the same with npm.*
+*In this tutorial, i'm using yarn. This will work the same with npm.*
 
 > This tutorial assume you are already familiar with GraphQL schema definition and Typescript.  
-If you are not, first read [this documentation](http://graphql.org/learn/schema/) for the GraphQL part and [this introduction](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) for Typescript
+If you are not, first read [this documentation about GraphQL Schema](http://graphql.org/learn/schema/) and [this documentation or a Typescript intro](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 
 
-**The full source code for this tutorial can be found {% post_link getting-started-code here %}**
+**The full source code for this tutorial can be found {% post_link code/getting-started here %}**
 
 ## Setup
 
 First setup a new nodejs project with **Typescript**.  
-We also install [**ts-node**](https://github.com/TypeStrong/ts-node) as it will make our life easier later on.
+We also install [**ts-node**](https://github.com/TypeStrong/ts-node) as it will make our life easier.
 
 ```
 mkdir todo
@@ -148,7 +148,7 @@ This will be pretty usefull when implementing complex resolvers later on...
 
 ## Create the Todo object type
 
-Using what we already know, let's create the todo object the same way:
+Using what we already know, let's create the Todo object:
 
 ```javascript
 import { Field, ObjectDefinition } from 'aerographql-schema';
@@ -166,11 +166,12 @@ Pretty straightforward.
 
 ## Create the User implementation
 
-Now it would be nice if we could query every todo of a given user.
+Now it would be nice if we could query every Todo of a given user.
 
 To do that we need GraphQL **resolvers**.
 
-AeroGraphQL wrap GraphQL resolvers in an elegant way.   
+AeroGraphQL wrap GraphQL resolvers in an elegant way by using several decorators.
+
 Let's explore that:
 
 ```javascript
@@ -190,17 +191,15 @@ export class UserImpl {
 
 This is a work in progress task, but let's explain each parts:
 
-First, use **@ObjectImplementation** to declare a class that will act as a container storing each resolver associated with the GraphQL type specified in the **name** attributes.
+First, we use **@ObjectImplementation** to declare a class that will act as a container storing each resolver associated with the GraphQL type specified in the **name** attributes.
 
 Then use the **@Resolver** decorator to declare a specific resolver.
 > Reminder: In GraphQL a resolver is the method called to retrieve the value of a given field.
 
-The name of the field associated with this resolver is the name of the method, here **todos**.
+* The name of the field associated with this resolver is the name of the method, here **todos**.
+* The type of this field is defined in the **@Resolver** parameter's **type** attribute, here **Todo**.  
 
-The type of this field is defined in the **@Resolver** parameter's **type** attribute, here **Todo**.  
-
-*Note that here we pass a class not a string.  
-We could also use string: `@Resolver( { type: 'Todo' } )`  
+*Note that here we pass a class not a string, we could also use plain string: `@Resolver( { type: 'Todo' } )`  
 While this sound similar, the first way is the prefered one, as it will be more easier for your IDE to refactor code and to track changes.*
 
 Finally, we use the **@Arg** decorator to define an argument for this field:  
@@ -314,7 +313,6 @@ This query will return the following error: `Cannot return null for non-nullable
 To solve that, we are going to quickly implement the RootQuery.user resolver.
 
 First add a dummy list of users and then change our resolver implementation:  
-*This user list would normally come from your Database using a dedicated service, we will come back to that in the next tutorial on using Dependencies Injection*
 
 ```javascript
 let users: User[] = [
@@ -336,10 +334,11 @@ export class RootQuery {
     }
 }
 ```
+*This user list would normally come from your Database using a dedicated service, we will come back to that in a next tutorial about using {% post_link dependency-injection dependency injection %}*
 
-Now re run the same previous query ... ;) ... this should now work.
+Now re run the previous query ... ;) ... this should now work.
 
-Now let's try this query:
+Now let's try this new query:
 ```
 {
   user( name: "Bob") {

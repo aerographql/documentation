@@ -8,7 +8,7 @@ toc: true
 
 This tutorial follow the {% post_link getting-started previous one %} to add support for GraphQL Interface and Union.
 
-We'll use the final source code of the {% post_link getting-started-code previous tutorial %} to start this new one.
+We'll use the final source code of the {% post_link code/getting-started previous tutorial %} to start this new one.
 
 If you don't know what GraphQL Interface and Input are, read this documentation beforehand:  
 * [Official GraphQL doc for Interface](http://graphql.org/learn/schema/#interfaces)
@@ -20,7 +20,7 @@ We will enhance our Todo list by adding two type of Todo:
 
 We will use **Interface** to declare a common base between those two inputs.
 
-**The full source code for this tutorial can be found {% post_link interface-and-union-code here %}**
+**The full source code for this tutorial can be found {% post_link code/interface-and-union here %}**
 
 ## Setup our Interface
 
@@ -176,3 +176,7 @@ The implementer should write the function with the approriate logic to detect th
 This is what happen here.  
 *This is one point that make AeroGraphQL easy to use*
 **This computation happen at Startup, so there is nearly zero overhead for that.**
+
+## What's next
+
+Next {% post_link dependency-injection tutorial %} will walk you through using the dependency injection system to enhance your resolvers..

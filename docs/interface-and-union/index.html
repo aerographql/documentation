@@ -113,7 +113,7 @@
     <article class="post-article">
         <section class="markdown-content">
             <h1 id="Interface-and-Union"><a href="#Interface-and-Union" class="headerlink" title="Interface and Union"></a>Interface and Union</h1><p>This tutorial follow the <a href="/documentation/getting-started/" title="previous one">previous one</a> to add support for GraphQL Interface and Union.</p>
-<p>We’ll use the final source code of the <a href="/documentation/getting-started-code/" title="previous tutorial">previous tutorial</a> to start this new one.</p>
+<p>We’ll use the final source code of the <a href="/documentation/code/getting-started/" title="previous tutorial">previous tutorial</a> to start this new one.</p>
 <p>If you don’t know what GraphQL Interface and Input are, read this documentation beforehand:  </p>
 <ul>
 <li><a href="http://graphql.org/learn/schema/#interfaces" target="_blank" rel="noopener">Official GraphQL doc for Interface</a></li>
@@ -125,7 +125,7 @@
 <li>Recurent Todo</li>
 </ul>
 <p>We will use <strong>Interface</strong> to declare a common base between those two inputs.</p>
-<p><strong>The full source code for this tutorial can be found <a href="/documentation/interface-and-union-code/" title="here">here</a></strong></p>
+<p><strong>The full source code for this tutorial can be found <a href="/documentation/code/interface-and-union/" title="here">here</a></strong></p>
 <h2 id="Setup-our-Interface"><a href="#Setup-our-Interface" class="headerlink" title="Setup our Interface"></a>Setup our Interface</h2><p>First let’s transform the Todo ObjectDefinition to an Iterface.<br>We will use the <strong>@Interface</strong> decorator here:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@Interface( &#123;</span><br><span class="line">    name: <span class="string">'Todo'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">    @Field( &#123; <span class="attr">type</span>: <span class="string">'ID'</span> &#125; ) id: string;</span><br><span class="line">    @Field() title: string = <span class="string">""</span>;</span><br><span class="line">    @Field() content: string = <span class="string">"Empty todo"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Then let’s define both our PonctualTodo and Recurent Todo:</p>
@@ -157,6 +157,7 @@
 <li><p>And finally, if neither <strong>__typename</strong> nor <strong>customResolveType</strong> was provided, AeroGraphQL will use a simple heuristic to find it’s type by analyzing the shape of each type implementing a common interface and by finding a unique field on each type that could be used as a discriminant to infer the object’s type.<br>This is what happen here.<br><em>This is one point that make AeroGraphQL easy to use</em><br><strong>This computation happen at Startup, so there is nearly zero overhead for that.</strong></p>
 </li>
 </ol>
+<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next"></a>What’s next</h2><p>Next <a href="/documentation/dependency-injection/" title="tutorial">tutorial</a> will walk you through using the dependency injection system to enhance your resolvers..</p>
 
         </section>
     </article>
@@ -165,7 +166,7 @@
   <div class="toc-main">
     <strong class="toc-title">Content</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Interface-and-Union"><span class="toc-nav-text">Interface and Union</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Setup-our-Interface"><span class="toc-nav-text">Setup our Interface</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Wire-them-in-the-Schema"><span class="toc-nav-text">Wire them in the Schema:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Update-the-fake-database"><span class="toc-nav-text">Update the fake database:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#How-does-it-work"><span class="toc-nav-text">How does it work ?</span></a></li></ol></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Interface-and-Union"><span class="toc-nav-text">Interface and Union</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Setup-our-Interface"><span class="toc-nav-text">Setup our Interface</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Wire-them-in-the-Schema"><span class="toc-nav-text">Wire them in the Schema:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Update-the-fake-database"><span class="toc-nav-text">Update the fake database:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#How-does-it-work"><span class="toc-nav-text">How does it work ?</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#What’s-next"><span class="toc-nav-text">What’s next</span></a></li></ol></li></ol>
     
   </div>
 </aside>
