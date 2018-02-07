@@ -286,7 +286,7 @@ this.app.listen( 3000, () => {
 
 > ---
 > They key point here is that AeroGraphQL provide you a valid GraphQL schema that can be directly provided to any GraphQL compliant server.  
-> This schema is automaticly builded with all it's resolver correctly wired, so just have to inject it.
+> This schema is automatically builded with all it's resolver correctly wired, so just have to inject it.
 >
 > The BaseSchema expose 2 members:
 > * **graphQLSchema**: Which is the final GraphQL Schema to use
@@ -295,11 +295,14 @@ this.app.listen( 3000, () => {
 
 ## Implement our resolvers
 
+Start the server:
+`yarn start`
+
 At this point, you could browse to http://localhost:3000/graphiql to explore our brand new GraphQL API ! Sweet :) 
 
-Congratulation, you now have a GraphQL server up and running, let's try to run some queries on it.  
-Try this one in graphiql:
+Congratulation, you now have a GraphQL server up and running.
 
+Try this query in graphiql:
 ```
 {
   user( name: "Bob") {
@@ -308,9 +311,9 @@ Try this one in graphiql:
   }
 }
 ```
-This query will return the following error: `Cannot return null for non-nullable field RootQuery.user.`
+You should get the following error: `Cannot return null for non-nullable field RootQuery.user.`
 
-To solve that, we are going to quickly implement the RootQuery.user resolver.
+To solve that, we are going to quickly implement the **RootQuery.user** resolver.
 
 First add a dummy list of users and then change our resolver implementation:  
 
@@ -353,8 +356,7 @@ Now let's try this new query:
 ```
 You should get the following error: `Cannot return null for non-nullable field User.todos.`
 
-Let's implement the user's todos resolver correctly
-
+Let's implement the user's todos resolver correctly:
 ```javascript
 let todos: { [ key: string ]: Todo[] } =
     {
@@ -388,13 +390,12 @@ export class UserImpl {
 Here we have defined a dummy todo list for each user.  
 *Once again, this would normaly be fetched from your favorite database, for now we will use this simple stub.*
 
-
 In the resolver itself, a few things have changed:
-* First as this resolver return a list of Todo, we add the **list: true** attribute to the **@Resolver** decorator
+* First, because this resolver should return a list of Todo, we add the **list: true** attribute to the **@Resolver** decorator
 * We added a first parameter to our resolver: **name: User**.   
   This first parameter will be the result of the previous resolver in the GraphQL resolution chain.  
-  Here this will be the User returned by the RootQuery.user field.   
-  Checkout this to learn more about [GraphQL execution model](http://graphql.org/learn/execution/#root-fields-resolvers)
+  Here this will be the User returned by the **RootQuery.user** field.   
+  Checkout this link to learn more about [GraphQL execution model](http://graphql.org/learn/execution/#root-fields-resolvers)
 
 Okay, there we are, now retry the previous query !
 
@@ -426,9 +427,9 @@ Here is the result you should have:
 
 ## Conclusion
 
-***Congratulation, you just setup your first AeroGraphQL server.***
+***Congratulation, you just setup your first AeroGraphQL schema.***
 
-Has you might have seen through this tutorial, you have mainly worked with strongly typed data to define both your GraphQL Schema and theirs implementation.
+Has you might have seen through this tutorial, you have mainly worked with strongly typed data to define both your GraphQL Schema and theirs implementations.
 
 You know have a glimpse of what AeroGraphQL can bring over using GraphQL directly.
 
@@ -440,6 +441,5 @@ You know have a glimpse of what AeroGraphQL can bring over using GraphQL directl
 ## What's next
 
 Next {% post_link tutorial/interface-and-union tutorial %} will walk you through using Interface and Union to enhance your schema...
-
 
 You can also checkout {% post_link notes/object-def-impl this page %} for more informations on **@ObjectDefinition** and **@ObjectImplementation**...

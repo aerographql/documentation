@@ -35,6 +35,6 @@ In GraphQL terms:
 
 ## ObjectImplementation and dependency injection
 
-While classes annotated with **@ObjectDefinition** are never instanciated by AeroGraphQL, classes annotated with **@ObjectImplementation** are automaticly instanciated by AeroGraphQL.
+While classes annotated with **@ObjectDefinition** are never instanciated by AeroGraphQL, classes annotated with **@ObjectImplementation** are automatically instanciated by AeroGraphQL.
 
 The reason is that ObjectImplementation are meant to be used within the dependency injection system in order to interact with Services defining the Busines logic, while ObjectDefinition are meant to be used as 'model' for your database schema.

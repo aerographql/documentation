@@ -6,7 +6,7 @@ toc: true
 
 # Dependency injection
 
-This tutorial follow the {% post_link tutorial/interface-and-union previous one %} and will teach you how to use the dependency injection system of AeroGraphQL to enhance your resolvers and make your code DRY.
+This tutorial follow the {% post_link tutorial/interface-and-union previous one %} and will teach you how to use the Dependency Injection system of AeroGraphQL to enhance your resolvers and make your code DRY.
 
 We'll use the final source code of the {% post_link code/interface-and-union previous tutorial %} to start this new one.
 
@@ -29,13 +29,12 @@ export class RootQuery {
 
 Actually, this method rely on a global variable *users* to implement it's business logic.  
 
-But what happen if this business logic become bigger and more complex ?
-
-What if some pieces of this logic have to be shared with other resolvers ?
+* But what happen if this business logic become bigger and more complex ?
+* What if some pieces of this logic have to be shared with other resolvers ?
 
 This is where Dependency Injection comes in !
 
-> Dependency injection allow you to define pieces of reusable code that can be shared between your resolvers.  
+> Dependency Injection allow you to define pieces of reusable code that can be shared between your resolvers.  
 > Those pieces of code can depends on each other forming a dependency tree resolved by AeroGraphQL.  
 
 Most of the time, you will use DI (Dependency Injection) to create services.
@@ -76,7 +75,7 @@ export class RootQuery {
 ```
 
 Here, we just tell the RootQuery class, that it depend on a depency called **UserService**. 
-This dependency will be automaticly injected into the root query class instance when needed.
+This dependency will be automatically injected into the root query class instance when needed.
 
 *This automatic resolution was possible because the UserService was decorated with he **@Injectable** decorator.*
 

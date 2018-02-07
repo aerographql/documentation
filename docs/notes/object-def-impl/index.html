@@ -150,7 +150,7 @@
 <li>a <strong>@Resolver</strong> is a <a href="http://graphql.org/learn/queries/#arguments" target="_blank" rel="noopener">field with arguments</a> and an associated resolve function.</li>
 </ul>
 <p><strong>@Field</strong> can only be defined in <strong>@ObjectDefinition</strong> while <strong>@Resolver</strong> can only be defined in <strong>ObjectImplementation</strong>  </p>
-<h2 id="ObjectImplementation-and-dependency-injection"><a href="#ObjectImplementation-and-dependency-injection" class="headerlink" title="ObjectImplementation and dependency injection"></a>ObjectImplementation and dependency injection</h2><p>While classes annotated with <strong>@ObjectDefinition</strong> are never instanciated by AeroGraphQL, classes annotated with <strong>@ObjectImplementation</strong> are automaticly instanciated by AeroGraphQL.</p>
+<h2 id="ObjectImplementation-and-dependency-injection"><a href="#ObjectImplementation-and-dependency-injection" class="headerlink" title="ObjectImplementation and dependency injection"></a>ObjectImplementation and dependency injection</h2><p>While classes annotated with <strong>@ObjectDefinition</strong> are never instanciated by AeroGraphQL, classes annotated with <strong>@ObjectImplementation</strong> are automatically instanciated by AeroGraphQL.</p>
 <p>The reason is that ObjectImplementation are meant to be used within the dependency injection system in order to interact with Services defining the Busines logic, while ObjectDefinition are meant to be used as ‘model’ for your database schema.</p>
 
         </section>

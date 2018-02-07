@@ -455,7 +455,7 @@ pre {
 }
 .catalog-container .fixed-toc {
   position: fixed;
-  top: 90px;
+  top: 120px;
 }
 .catalog-container .toc-main {
   padding-left: 20px;

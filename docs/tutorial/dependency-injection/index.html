@@ -130,17 +130,19 @@
 <main class="app-body flex-box">
     <article class="post-article">
         <section class="markdown-content">
-            <h1 id="Dependency-injection"><a href="#Dependency-injection" class="headerlink" title="Dependency injection"></a>Dependency injection</h1><p>This tutorial follow the <a href="/documentation/tutorial/interface-and-union/" title="previous one">previous one</a> and will teach you how to use the dependency injection system of AeroGraphQL to enhance your resolvers and make your code DRY.</p>
+            <h1 id="Dependency-injection"><a href="#Dependency-injection" class="headerlink" title="Dependency injection"></a>Dependency injection</h1><p>This tutorial follow the <a href="/documentation/tutorial/interface-and-union/" title="previous one">previous one</a> and will teach you how to use the Dependency Injection system of AeroGraphQL to enhance your resolvers and make your code DRY.</p>
 <p>We’ll use the final source code of the <a href="/documentation/code/interface-and-union/" title="previous tutorial">previous tutorial</a> to start this new one.</p>
 <p><strong>The full source code for this tutorial can be found <a href="/documentation/code/dependency-injection/" title="here">here</a></strong></p>
 <h2 id="Why-do-we-need-Dependency-Injection"><a href="#Why-do-we-need-Dependency-Injection" class="headerlink" title="Why do we need Dependency Injection"></a>Why do we need Dependency Injection</h2><p>Let’s have a look at the current implementation of our RootQuery User’s resolver:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@ObjectImplementation( &#123; <span class="attr">name</span>: <span class="string">'RootQuery'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RootQuery</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: User &#125; )</span><br><span class="line">    user( @Arg() name: string ): User | <span class="built_in">Promise</span>&lt;User&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> users.find( <span class="function"><span class="params">u</span> =&gt;</span> u.name === name );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Actually, this method rely on a global variable <em>users</em> to implement it’s business logic.  </p>
-<p>But what happen if this business logic become bigger and more complex ?</p>
-<p>What if some pieces of this logic have to be shared with other resolvers ?</p>
+<ul>
+<li>But what happen if this business logic become bigger and more complex ?</li>
+<li>What if some pieces of this logic have to be shared with other resolvers ?</li>
+</ul>
 <p>This is where Dependency Injection comes in !</p>
 <blockquote>
-<p>Dependency injection allow you to define pieces of reusable code that can be shared between your resolvers.<br>Those pieces of code can depends on each other forming a dependency tree resolved by AeroGraphQL.  </p>
+<p>Dependency Injection allow you to define pieces of reusable code that can be shared between your resolvers.<br>Those pieces of code can depends on each other forming a dependency tree resolved by AeroGraphQL.  </p>
 </blockquote>
 <p>Most of the time, you will use DI (Dependency Injection) to create services.</p>
 <h2 id="Writing-the-service-and-injecting-it"><a href="#Writing-the-service-and-injecting-it" class="headerlink" title="Writing the service and injecting it"></a>Writing the service and injecting it</h2><p>We start by writing the service itself:</p>
@@ -148,7 +150,7 @@
 <p>One thing to note: we use the <strong>@Injectable</strong> decorator on our class.<br>This decorator will force Typescript to emit metadata that will be use by AeroGraphQL internally.  </p>
 <p>Now let’s change our RootQuery to use a new <strong>UserService</strong> that will handle all the database communication logic:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@ObjectImplementation( &#123; <span class="attr">name</span>: <span class="string">'RootQuery'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RootQuery</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>( private userService: UserService ) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: User &#125; )</span><br><span class="line">    user( @Arg() name: string ): User | <span class="built_in">Promise</span>&lt;User&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.userService.find( name );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Here, we just tell the RootQuery class, that it depend on a depency called <strong>UserService</strong>.<br>This dependency will be automaticly injected into the root query class instance when needed.</p>
+<p>Here, we just tell the RootQuery class, that it depend on a depency called <strong>UserService</strong>.<br>This dependency will be automatically injected into the root query class instance when needed.</p>
 <p><em>This automatic resolution was possible because the UserService was decorated with he <strong>@Injectable</strong> decorator.</em></p>
 <blockquote>
 <hr>
