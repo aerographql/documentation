@@ -6,7 +6,7 @@ toc: true
 
 # Dependency injection
 
-This tutorial follow the {% post_link interface-and-union previous one %} and will teach you how to use the dependency injection system of AeroGraphQL to enhance your resolvers and make your code DRY.
+This tutorial follow the {% post_link tutorial/interface-and-union previous one %} and will teach you how to use the dependency injection system of AeroGraphQL to enhance your resolvers and make your code DRY.
 
 We'll use the final source code of the {% post_link code/interface-and-union previous tutorial %} to start this new one.
 
@@ -214,4 +214,4 @@ In fact the previous syntax is a shorthand for the full one:
 
 ## What's next
 
-Next {% post_link middleware tutorial %} will walk you through using middleware to implement authentification..
+Next {% post_link tutorial/middleware tutorial %} will walk you through using middleware to implement authentification..

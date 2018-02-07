@@ -171,7 +171,7 @@
 <h3 id="ObjectDefinition-ObjectDefinitionConfig"><a href="#ObjectDefinition-ObjectDefinitionConfig" class="headerlink" title="@ObjectDefinition( ObjectDefinitionConfig )"></a>@ObjectDefinition( ObjectDefinitionConfig )</h3><p>Apply this decorator on a class to create a new GraphQL object with only fields.<br>Or to add fields to an existing GraphQL object with the same name.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">interface ObjectDefinitionConfig &#123;</span><br><span class="line">    name?: string;</span><br><span class="line">    description?: string;</span><br><span class="line">    implements?: Function[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p><strong>name:</strong> Name of this object in the GraphQL schema<br><em>Default to the name of the class decorated</em></p>
+<li><p><strong>name:</strong> Name of the GraphQL object this class refers to<br><em>Default to the name of the class decorated</em></p>
 </li>
 <li><p><strong>description:</strong> Description associated with this GraphQL object.<br><em>Default to null</em></p>
 </li>
@@ -181,7 +181,7 @@
 <h3 id="ObjectImplementation-ObjectImplementationConfig"><a href="#ObjectImplementation-ObjectImplementationConfig" class="headerlink" title="@ObjectImplementation( ObjectImplementationConfig )"></a>@ObjectImplementation( ObjectImplementationConfig )</h3><p>Apply this decorator on a class to create a new GraphQL object with only resolvers.<br>Or to add resolvers to an existing GraphQL object with the same name.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface ObjectDefinitionConfig &#123;</span><br><span class="line">    name?: string;</span><br><span class="line">    description?: string;</span><br><span class="line">    implements?: Function[];</span><br><span class="line">    middlewares?: MiddlewareDescriptor[];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export interface MiddlewareDescriptor &#123;</span><br><span class="line">    provider: Function;</span><br><span class="line">    options?: any;</span><br><span class="line">    resultName?: string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p><strong>name:</strong> Name of this object in the GraphQL schema<br><em>Default to the name of the class decorated</em></p>
+<li><p><strong>name:</strong> Name of the GraphQL object this class refers to<br><em>Default to the name of the class decorated</em></p>
 </li>
 <li><p><strong>description:</strong> Description associated with this GraphQL object.<br><em>Default to null</em></p>
 </li>

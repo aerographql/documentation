@@ -8,7 +8,7 @@
   <link rel="shortcut icon" type="image/ico" href="/documentation/images/logo-favicon.png"/> 
   <title>
     
-      Documentations | Aerographql
+      ObjectDefinition and ObjectImplementation | Aerographql
     
   </title>
   <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
@@ -130,9 +130,41 @@
 <main class="app-body flex-box">
     <article class="post-article">
         <section class="markdown-content">
-            <h1 id="Table-of-content"><a href="#Table-of-content" class="headerlink" title="Table of content:"></a>Table of content:</h1><h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><h3 id=""><a href="#" class="headerlink" title=""></a><a href="/documentation/tutorial/getting-started/" title="Getting started">Getting started</a></h3><h3 id="-1"><a href="#-1" class="headerlink" title=""></a><a href="/documentation/tutorial/interface-and-union/" title="Interface and Union">Interface and Union</a></h3><h3 id="-2"><a href="#-2" class="headerlink" title=""></a><a href="/documentation/tutorial/dependency-injection/" title="Dependency Injection">Dependency Injection</a></h3><h3 id="-3"><a href="#-3" class="headerlink" title=""></a><a href="/documentation/tutorial/middleware/" title="Middleware">Middleware</a></h3><h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="-4"><a href="#-4" class="headerlink" title=""></a><a href="/documentation/notes/object-def-impl/" title="Object Definition and Implementation">Object Definition and Implementation</a></h3>
+            <h1 id="Object-Definition-and-Implementation"><a href="#Object-Definition-and-Implementation" class="headerlink" title="Object Definition and Implementation"></a>Object Definition and Implementation</h1><p>There is a one to one relationship between GraphQL Interface, Scalar, Input, Union and their corresponding Typescript class:</p>
+<p>AeroGraphQL define:</p>
+<ul>
+<li><strong>@Interface()</strong> to create a GraphQL interface</li>
+<li><strong>@Scalar()</strong> to create a GraphQL scalar</li>
+<li><strong>@Input()</strong> to create a GraphQL input</li>
+<li><strong>@Uniont()</strong> to create a GraphQL union</li>
+</ul>
+<p>But to create a GraphQL object AeroGraphQL provide two decorators <strong>@ObjectDefinition</strong> and <strong>@ObjectImplementation</strong>.</p>
+<p>We recap here what are their differences and how they work together to create a full GraphQL object:</p>
+<h2 id="GraphQL-object’s-structure"><a href="#GraphQL-object’s-structure" class="headerlink" title="GraphQL object’s structure:"></a>GraphQL object’s structure:</h2><p>The Final GraphQL Object’s structure is:<br><strong>the union of every fields and every resolvers defined in every @ObjectDefinition and @ObjectImplementation annotated class sharing the same GraphQL name</strong></p>
+<blockquote>
+<p>Both decorator must be provided with a configuration object. This object contain a name field which identify GraphQL object the class refers to.</p>
+</blockquote>
+<h2 id="Field-and-resolvers"><a href="#Field-and-resolvers" class="headerlink" title="Field and resolvers"></a>Field and resolvers</h2><p>In GraphQL terms:</p>
+<ul>
+<li>a <strong>@Field</strong> is a <a href="http://graphql.org/learn/queries/#fields" target="_blank" rel="noopener">field without argument</a></li>
+<li>a <strong>@Resolver</strong> is a <a href="http://graphql.org/learn/queries/#arguments" target="_blank" rel="noopener">field with arguments</a> and an associated resolve function.</li>
+</ul>
+<p><strong>@Field</strong> can only be defined in <strong>@ObjectDefinition</strong> while <strong>@Resolver</strong> can only be defined in <strong>ObjectImplementation</strong>  </p>
+<h2 id="ObjectImplementation-and-dependency-injection"><a href="#ObjectImplementation-and-dependency-injection" class="headerlink" title="ObjectImplementation and dependency injection"></a>ObjectImplementation and dependency injection</h2><p>While classes annotated with <strong>@ObjectDefinition</strong> are never instanciated by AeroGraphQL, classes annotated with <strong>@ObjectImplementation</strong> are automaticly instanciated by AeroGraphQL.</p>
+<p>The reason is that ObjectImplementation are meant to be used within the dependency injection system in order to interact with Services defining the Busines logic, while ObjectDefinition are meant to be used as ‘model’ for your database schema.</p>
+
         </section>
     </article>
+    
+        <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Content</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Object-Definition-and-Implementation"><span class="toc-nav-text">Object Definition and Implementation</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#GraphQL-object’s-structure"><span class="toc-nav-text">GraphQL object’s structure:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Field-and-resolvers"><span class="toc-nav-text">Field and resolvers</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ObjectImplementation-and-dependency-injection"><span class="toc-nav-text">ObjectImplementation and dependency injection</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+
     
 </main>
 

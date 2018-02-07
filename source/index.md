@@ -9,7 +9,7 @@ toc: false
 
 # What is AeroGraphQL ?
 
-> **AeroGraphQL** is an opinionated [Typescript](https://www.typescriptlang.org/index.html) framework to create [GraphQL](http://graphql.org/learn/) server using a declarative approach.
+> **AeroGraphQL** is a small and opinionated [Typescript](https://www.typescriptlang.org/index.html) toolkit to create [GraphQL](http://graphql.org/learn/) server using a declarative approach.
 
 
 * Define your [GraphQL schema](http://graphql.org/learn/schema/) using Typesctipt annotations and intergrate seamlessly your [GraphQL resolvers](http://graphql.org/learn/execution/) using those same types, directly in Typescript.
@@ -102,4 +102,4 @@ With each resolvers automaticaly wired.
 
 # Where to go next ?
 
-**Follow the {% post_link getting-started Getting started guide %} to learn more about AeroGraphQL !**
+**Follow the {% post_link tutorial/getting-started Getting started guide %} to learn more about AeroGraphQL !**

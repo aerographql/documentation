@@ -109,7 +109,7 @@ interface ObjectDefinitionConfig {
 }
 ```
 
-* **name:** Name of this object in the GraphQL schema  
+* **name:** Name of the GraphQL object this class refers to  
 *Default to the name of the class decorated*
 
 * **description:** Description associated with this GraphQL object.  
@@ -138,7 +138,7 @@ export interface MiddlewareDescriptor {
 }
 ```
 
-* **name:** Name of this object in the GraphQL schema  
+* **name:** Name of the GraphQL object this class refers to  
 *Default to the name of the class decorated*
 
 * **description:** Description associated with this GraphQL object.  

@@ -6,7 +6,7 @@ toc: true
 
 # Interface and Union
 
-This tutorial follow the {% post_link getting-started previous one %} to add support for GraphQL Interface and Union.
+This tutorial follow the {% post_link tutorial/getting-started previous one %} to add support for GraphQL Interface and Union.
 
 We'll use the final source code of the {% post_link code/getting-started previous tutorial %} to start this new one.
 
@@ -65,11 +65,11 @@ Here, we use the **implements** field of the **@ObjectDefinition** to define whi
 
 > Also note that the **name** field on both type is *not* specified.  
 In this case, AeroGraphQL will infer the GraphQL name from the Typescript class name.  
-Here the GraphQL name will be RecurentTodo and PonctualTodo.
+Here the GraphQL name will be **RecurentTodo** and **PonctualTodo**.
 
 ## Wire them in the Schema:
 
-Don't forget to add those new type in the schema components:
+Don't forget to add those new type in the schema components list:
 
 ```javascript
 @Schema( {
@@ -179,4 +179,4 @@ This is what happen here.
 
 ## What's next
 
-Next {% post_link dependency-injection tutorial %} will walk you through using the dependency injection system to enhance your resolvers..
+Next {% post_link tutorial/dependency-injection tutorial %} will walk you through using the dependency injection system to enhance your resolvers..

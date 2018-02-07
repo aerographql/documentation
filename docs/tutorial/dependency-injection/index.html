@@ -130,7 +130,7 @@
 <main class="app-body flex-box">
     <article class="post-article">
         <section class="markdown-content">
-            <h1 id="Dependency-injection"><a href="#Dependency-injection" class="headerlink" title="Dependency injection"></a>Dependency injection</h1><p>This tutorial follow the <a href="/documentation/interface-and-union/" title="previous one">previous one</a> and will teach you how to use the dependency injection system of AeroGraphQL to enhance your resolvers and make your code DRY.</p>
+            <h1 id="Dependency-injection"><a href="#Dependency-injection" class="headerlink" title="Dependency injection"></a>Dependency injection</h1><p>This tutorial follow the <a href="/documentation/tutorial/interface-and-union/" title="previous one">previous one</a> and will teach you how to use the dependency injection system of AeroGraphQL to enhance your resolvers and make your code DRY.</p>
 <p>We’ll use the final source code of the <a href="/documentation/code/interface-and-union/" title="previous tutorial">previous tutorial</a> to start this new one.</p>
 <p><strong>The full source code for this tutorial can be found <a href="/documentation/code/dependency-injection/" title="here">here</a></strong></p>
 <h2 id="Why-do-we-need-Dependency-Injection"><a href="#Why-do-we-need-Dependency-Injection" class="headerlink" title="Why do we need Dependency Injection"></a>Why do we need Dependency Injection</h2><p>Let’s have a look at the current implementation of our RootQuery User’s resolver:</p>
@@ -199,7 +199,7 @@
 <p>In the previous case, we use a simpler syntax:<br><code>constructor( private userService: UserService )</code> because UserService is a <strong>class</strong> AeroGraphQL was able to infer which dependency to inject by using the generated Typesctipt metadata.</p>
 <p>But when the dependency is not a class, we must explicitly tell the DI system which token to lookup for this dependency.</p>
 <p>In fact the previous syntax is a shorthand for the full one:<br><code>constructor( @Inject(&#39;UserService&#39;) private userService: UserService )</code></p>
-<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next"></a>What’s next</h2><p>Next <a href="/documentation/middleware/" title="tutorial">tutorial</a> will walk you through using middleware to implement authentification..</p>
+<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next"></a>What’s next</h2><p>Next <a href="/documentation/tutorial/middleware/" title="tutorial">tutorial</a> will walk you through using middleware to implement authentification..</p>
 
         </section>
     </article>

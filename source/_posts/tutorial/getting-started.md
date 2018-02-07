@@ -334,7 +334,7 @@ export class RootQuery {
     }
 }
 ```
-*This user list would normally come from your Database using a dedicated service, we will come back to that in a next tutorial about using {% post_link dependency-injection dependency injection %}*
+*This user list would normally come from your Database using a dedicated service, we will come back to that in a next tutorial about using {% post_link tutorial/dependency-injection dependency injection %}*
 
 Now re run the previous query ... ;) ... this should now work.
 
@@ -439,4 +439,7 @@ You know have a glimpse of what AeroGraphQL can bring over using GraphQL directl
 
 ## What's next
 
-Next {% post_link interface-and-union tutorial %} will walk you through using Interface and Union to enhance your schema...
+Next {% post_link tutorial/interface-and-union tutorial %} will walk you through using Interface and Union to enhance your schema...
+
+
+You can also checkout {% post_link notes/object-def-impl this page %} for more informations on **@ObjectDefinition** and **@ObjectImplementation**...
