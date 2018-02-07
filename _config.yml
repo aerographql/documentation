@@ -48,6 +48,8 @@ menu:
     url: /
  Documentations: 
     url: /docs/
+ Api: 
+    url: /api/
  Github: 
     url: https://github.com/aerographql
     icon: /documentation/images/logo-github.png
