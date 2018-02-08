@@ -67,10 +67,12 @@ In your **package.json** add a script to run the server:
 }
 ```
 
-Finally install **aerographql-schema**:
+Finally install **aerographql-schema** AND **graphql**:
+
+> Graphql is a peer dependency of AeroGraphQL and must be explicitly installed
 
 ```
-yarn add aerographql-schema
+yarn add graphql aerographql-schema 
 ```
 
 

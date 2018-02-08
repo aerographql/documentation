@@ -170,7 +170,7 @@
 <li>We implement the BaseMiddleware interface.</li>
 </ul>
 <blockquote>
-<p>The BaseMiddleware take a Generic parameter that represent the type returned by the middleware.</p>
+<p>The BaseMiddleware interface take a Generic parameter that represent the type returned by the middleware.</p>
 </blockquote>
 <p>Let’s have a look at the signature of the <strong>execute</strong> function:<br>It’s take four parameters.<br>The first three ones should looks familiar:<br><strong>src, args, context</strong> are the standard parameters passed to any <a href="http://graphql.org/learn/execution/#root-fields-resolvers" target="_blank" rel="noopener">GraphQL resolver functions</a><br>The <strong>options</strong> parameter is specific to AeroGraphQL middleware, and is used to customize the behavior of each middleware. More on that soon…</p>
 <h2 id="Use-it"><a href="#Use-it" class="headerlink" title="Use it"></a>Use it</h2><p>Now that we have our middleware we need to use it.<br>In our case we like to call this middleware on every query on the RootQuery object:</p>

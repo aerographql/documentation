@@ -56,7 +56,7 @@ The key points here are:
 * We use the **@Middleware** decorator to tag this class as a Middleware
 * We implement the BaseMiddleware interface.
 
-> The BaseMiddleware take a Generic parameter that represent the type returned by the middleware.
+> The BaseMiddleware interface take a Generic parameter that represent the type returned by the middleware.
 
 Let's have a look at the signature of the **execute** function:  
 It's take four parameters.  
