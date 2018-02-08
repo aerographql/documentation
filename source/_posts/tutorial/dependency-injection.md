@@ -8,9 +8,9 @@ toc: true
 
 This tutorial follow the {% post_link tutorial/interface-and-union previous one %} and will teach you how to use the Dependency Injection system of AeroGraphQL to enhance your resolvers and make your code DRY.
 
-We'll use the final source code of the {% post_link code/interface-and-union previous tutorial %} to start this new one.
+We'll use the final source code of the {% post_link code/interface-and-union previous tutorial %} as a starting point.
 
-**The full source code for this tutorial can be found {% post_link code/dependency-injection here %}**
+**The full source code for this tutorial can be found {% post_link code/dependency-injection here %}**.
 
 ## Why do we need Dependency Injection
 
@@ -45,7 +45,7 @@ We start by writing the service itself:
 
 ```javascript
 
-import { Injectable } from 'aerographql-core';
+import { Injectable } from 'aerographql-schema';
 
 @Injectable() 
 class UserService {
@@ -181,7 +181,7 @@ This kind of provider won't be *instanciated* with the new operator like a facto
 Here is how to pass a single value as a provider:
 
 ```javascript
-import { Inject } from 'aerographql-core';
+import { Inject } from 'aerographql-schema';
 
 // First configure the schema internal injector
 

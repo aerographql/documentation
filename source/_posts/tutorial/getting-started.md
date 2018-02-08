@@ -14,7 +14,7 @@ This guide will provide you a step by step tutorial to setup a full GraphQL serv
 If you are not, first read [this documentation about GraphQL Schema](http://graphql.org/learn/schema/) and [this documentation or a Typescript intro](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 
 
-**The full source code for this tutorial can be found {% post_link code/getting-started here %}**
+**The full source code for this tutorial can be found {% post_link code/getting-started here %}**.
 
 ## Setup
 
@@ -128,7 +128,7 @@ But for the **id** field, we like to tell GraphQL that this particular field is 
 
 We could also use the **ID** type provided by AeroGraphQL instead of the **'ID'** string, avoiding us the overload:
 ```
-import { ID } from 'aerographql-core';
+import { ID } from 'aerographql-schema';
 ..
    @Field( ) id: ID;
 ..

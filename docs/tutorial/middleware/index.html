@@ -130,7 +130,61 @@
 <main class="app-body flex-box">
     <article class="post-article">
         <section class="markdown-content">
-            <p>Todo</p>
+            <h1 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h1><p>This tutorial follow the <a href="/documentation/tutorial/dependency-injection/" title="previous one">previous one</a> and will teach you how to use the Middleware system of AeroGraphQL to create an authentification layer.</p>
+<p>We’ll use the final source code of the <a href="/documentation/code/dependency-injection/" title="previous tutorial">previous tutorial</a> as a starting point.</p>
+<p><strong>The full source code for this tutorial can be found <a href="/documentation/code/dependency-injection/" title="here">here</a></strong></p>
+<h2 id="What’s-an-AeroGraphQL-middleware"><a href="#What’s-an-AeroGraphQL-middleware" class="headerlink" title="What’s an AeroGraphQL middleware"></a>What’s an AeroGraphQL middleware</h2><p>AeroGraphQL middleware are similar to <a href="https://www.safaribooksonline.com/blog/2014/03/10/express-js-middleware-demystified/" target="_blank" rel="noopener">ExpressJs middleware</a> in the sense that they are simple function applied sequentially in order to process an inpur request.</p>
+<p>Here are some key concepts about AeroGraphQL middlewares:</p>
+<ul>
+<li>As opposed to ExpressJs AeroGraphQL Middleware are class that implement an <strong>execute</strong> method</li>
+<li>An AeroGraphQL middleware applies to the GraphQL Queries.</li>
+<li>An AeroGraphQL middleware can be used either as:<ul>
+<li>Guard, accepting or rejecting input queries dependig on certain conditions.</li>
+<li>Resolver, feeding the GraphQL context object with new values needed for subsequent operations.</li>
+<li>A mix of both.</li>
+</ul>
+</li>
+<li>An AeroGraphQL middleware chain is always associated with an <strong>@Resolver</strong> method:<ul>
+<li>The <strong>@Resolver</strong> method is always the last element in the chain to be executed.</li>
+<li>The <strong>@Resolver</strong> method will only be executed if all of their associated middleware succeed.</li>
+<li>As soon as a middleware fail, the rest of the chain won’t be executed, including the final <strong>@Resolver</strong></li>
+</ul>
+</li>
+<li>An AeroGraphQL middleware is considered as successful if it return either:<ul>
+<li>A truthy value</li>
+<li>An accepted promise</li>
+</ul>
+</li>
+<li>An AeroGraphQL middleware is considered as unsuccessful if it return either:<ul>
+<li>A falsy value</li>
+<li>An resjected promise</li>
+</ul>
+</li>
+<li>An AeroGraphQL middleware is a part of the Dependecy Injection system and can have dependencies defined in it’s constructor</li>
+</ul>
+<h2 id="Create-our-first-Middleware"><a href="#Create-our-first-Middleware" class="headerlink" title="Create our first Middleware"></a>Create our first Middleware</h2><p>First, write the Middleware class itself:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Middleware, BaseMiddleware &#125; <span class="keyword">from</span> <span class="string">'aerographql-schema'</span>;</span><br><span class="line"></span><br><span class="line">@Middleware()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthMiddleware</span> <span class="title">implements</span> <span class="title">BaseMiddleware</span>&lt;<span class="title">boolean</span>&gt; </span>&#123;</span><br><span class="line">    execute( src: any, <span class="attr">args</span>: any, <span class="attr">context</span>: any, <span class="attr">options</span>: any ) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log( <span class="string">'From the middleware'</span> );</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The key points here are:</p>
+<ul>
+<li>We use the <strong>@Middleware</strong> decorator to tag this class as a Middleware</li>
+<li>We implement the BaseMiddleware interface.</li>
+</ul>
+<blockquote>
+<p>The BaseMiddleware take a Generic parameter that represent the type returned by the middleware.</p>
+</blockquote>
+<p>Let’s have a look at the signature of the <strong>execute</strong> function:<br>It’s take four parameters.<br>The first three ones should looks familiar:<br><strong>src, args, context</strong> are the standard parameters passed to any <a href="http://graphql.org/learn/execution/#root-fields-resolvers" target="_blank" rel="noopener">GraphQL resolver functions</a><br>The <strong>options</strong> parameter is specific to AeroGraphQL middleware, and is used to customize the behavior of each middleware. More on that soon…</p>
+<h2 id="Use-it"><a href="#Use-it" class="headerlink" title="Use it"></a>Use it</h2><p>Now that we have our middleware we need to use it.<br>In our case we like to call this middleware on every query on the RootQuery object:</p>
+<p>Add to the RootQuery class decorator configuration the <strong>middlewares</strong> field:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@ObjectImplementation( &#123; <span class="attr">name</span>: <span class="string">'RootQuery'</span>, <span class="attr">middlewares</span>: [ &#123; <span class="attr">provider</span>: AuthMiddleware &#125; ]  &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">RootQuery</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>( private userService: UserService ) &#123; &#125;</span><br><span class="line"></span><br><span class="line">    @Resolver( &#123; <span class="attr">type</span>: User &#125; )</span><br><span class="line">    user( @Arg() name: string ): User | <span class="built_in">Promise</span>&lt;User&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.userService.find( name );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Restart your server: <code>yarn start</code> and execute the following query:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user( name: &quot;Bob&quot; ) &#123;</span><br><span class="line">    id</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Checkout the server output and you sould see that the middleware was correctly called.</p>
+<blockquote>
+<p>There is two places where a middleware chain can be defined:</p>
+<ul>
+<li>At the class level, in the <strong>@ObjectImplementation</strong> configuration:<br>In this case the middleware chain will be called for every <strong>@Resolver</strong> of this class</li>
+<li>At the resolver level, in the <strong>@Provider</strong> configuration:<br>In this case, the middleware chain will only be called for this specific resolver, overriding the one defined at the class level, if  any.</li>
+</ul>
+</blockquote>
 
         </section>
     </article>
@@ -139,7 +193,7 @@
   <div class="toc-main">
     <strong class="toc-title">Content</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Middleware"><span class="toc-nav-text">Middleware</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#What’s-an-AeroGraphQL-middleware"><span class="toc-nav-text">What’s an AeroGraphQL middleware</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Create-our-first-Middleware"><span class="toc-nav-text">Create our first Middleware</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Use-it"><span class="toc-nav-text">Use it</span></a></li></ol></li></ol>
     
   </div>
 </aside>

@@ -131,7 +131,7 @@
     <article class="post-article">
         <section class="markdown-content">
             <h1 id="Interface-and-Union"><a href="#Interface-and-Union" class="headerlink" title="Interface and Union"></a>Interface and Union</h1><p>This tutorial follow the <a href="/documentation/tutorial/getting-started/" title="previous one">previous one</a> to add support for GraphQL Interface and Union.</p>
-<p>We’ll use the final source code of the <a href="/documentation/code/getting-started/" title="previous tutorial">previous tutorial</a> to start this new one.</p>
+<p>We’ll use the final source code of the <a href="/documentation/code/getting-started/" title="previous tutorial">previous tutorial</a> as a starting point.</p>
 <p>If you don’t know what GraphQL Interface and Input are, read this documentation beforehand:  </p>
 <ul>
 <li><a href="http://graphql.org/learn/schema/#interfaces" target="_blank" rel="noopener">Official GraphQL doc for Interface</a></li>
@@ -143,7 +143,7 @@
 <li>Recurent Todo</li>
 </ul>
 <p>We will use <strong>Interface</strong> to declare a common base between those two inputs.</p>
-<p><strong>The full source code for this tutorial can be found <a href="/documentation/code/interface-and-union/" title="here">here</a></strong></p>
+<p><strong>The full source code for this tutorial can be found <a href="/documentation/code/interface-and-union/" title="here">here</a></strong>.</p>
 <h2 id="Setup-our-Interface"><a href="#Setup-our-Interface" class="headerlink" title="Setup our Interface"></a>Setup our Interface</h2><p>First let’s transform the Todo ObjectDefinition to an Iterface.<br>We will use the <strong>@Interface</strong> decorator here:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@Interface( &#123;</span><br><span class="line">    name: <span class="string">'Todo'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">    @Field( &#123; <span class="attr">type</span>: <span class="string">'ID'</span> &#125; ) id: string;</span><br><span class="line">    @Field() title: string = <span class="string">""</span>;</span><br><span class="line">    @Field() content: string = <span class="string">"Empty todo"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Then let’s define both our PonctualTodo and Recurent Todo:</p>
