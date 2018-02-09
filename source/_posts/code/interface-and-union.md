@@ -3,7 +3,7 @@ import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import { Field, ObjectDefinition, ObjectImplementation, Resolver, Arg, Schema, BaseSchema, Interface } from 'aerographql-schema';
+import { Field, ObjectDefinition, ObjectImplementation, Resolver, Arg, Schema, BaseSchema, Interface } from 'aerographql';
 
 /** 
  * Fake Database objects

@@ -45,7 +45,7 @@ We start by writing the service itself:
 
 ```javascript
 
-import { Injectable } from 'aerographql-schema';
+import { Injectable } from 'aerographql';
 
 @Injectable() 
 class UserService {
@@ -181,7 +181,7 @@ This kind of provider won't be *instanciated* with the new operator like a facto
 Here is how to pass a single value as a provider:
 
 ```javascript
-import { Inject } from 'aerographql-schema';
+import { Inject } from 'aerographql';
 
 // First configure the schema internal injector
 
@@ -213,4 +213,4 @@ In fact the previous syntax is a shorthand for the full one:
 
 ## What's next
 
-Next {% post_link tutorial/middleware tutorial %} will walk you through using middleware to implement authentification..
+Next {% post_link tutorial/middleware tutorial %} will walk you through using middleware to implement authentication..

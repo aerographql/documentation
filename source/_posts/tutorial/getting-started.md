@@ -67,12 +67,12 @@ In your **package.json** add a script to run the server:
 }
 ```
 
-Finally install **aerographql-schema** AND **graphql**:
+Finally install **aerographql** AND **graphql**:
 
 > Graphql is a peer dependency of AeroGraphQL and must be explicitly installed
 
 ```
-yarn add graphql aerographql-schema 
+yarn add graphql aerographql 
 ```
 
 
@@ -83,7 +83,7 @@ Now let's write some code:
 First start by creating the user type definition in **main.ts**:
 
 ```javascript
-import { ObjectDefinition } from 'aerographql-schema';
+import { ObjectDefinition } from 'aerographql';
 
 @ObjectDefinition( {
     name: 'User'
@@ -109,7 +109,7 @@ In this case, a GraphQL object with the name **User** will be created.
 For now we just have empty objects, let's add some fields to our user using the **@Field** decorator:
 
 ```javascript
-import { Field, ObjectDefinition, ObjectImplementation } from 'aerographql-schema';
+import { Field, ObjectDefinition, ObjectImplementation } from 'aerographql';
 
 @ObjectDefinition( {
     name: 'User'
@@ -130,7 +130,7 @@ But for the **id** field, we like to tell GraphQL that this particular field is 
 
 We could also use the **ID** type provided by AeroGraphQL instead of the **'ID'** string, avoiding us the overload:
 ```
-import { ID } from 'aerographql-schema';
+import { ID } from 'aerographql';
 ..
    @Field( ) id: ID;
 ..
@@ -153,7 +153,7 @@ This will be pretty usefull when implementing complex resolvers later on...
 Using what we already know, let's create the Todo object:
 
 ```javascript
-import { Field, ObjectDefinition } from 'aerographql-schema';
+import { Field, ObjectDefinition } from 'aerographql';
 
 @ObjectDefinition( {
     name: 'Todo'
@@ -177,7 +177,7 @@ AeroGraphQL wrap GraphQL resolvers in an elegant way by using several decorators
 Let's explore that:
 
 ```javascript
-import { Resolver, Arg, ObjectImplementation } from 'aerographql-schema';
+import { Resolver, Arg, ObjectImplementation } from 'aerographql';
 
 @ObjectImplementation( {
     name: 'User'
@@ -220,7 +220,7 @@ At this point the core implementation of this resolver is missing, we will come 
 
 ## Create the RootQuery object type
 ```javascript
-import { Field, ObjectImplementation } from 'aerographql-schema';
+import { Field, ObjectImplementation } from 'aerographql';
 
 @ObjectImplementation( {
     name: 'RootQuery'
@@ -243,7 +243,7 @@ It's resolver will allow us to query for a given user using it's name as paramet
 
 Now that all the pieces are here, let's stitch them all together using a schema:
 ```javascript
-import { Schema, BaseSchema } from 'aerographql-schema';
+import { Schema, BaseSchema } from 'aerographql';
 
 @Schema( {
     rootQuery: 'RootQuery',
@@ -326,7 +326,7 @@ let users: User[] = [
     { admin: false, age: 28, description: 'Decription of Steeve', name: 'Steeve', id: '3'}
 ];
 
-import { Field, ObjectImplementation } from 'aerographql-schema';
+import { Field, ObjectImplementation } from 'aerographql';
 
 @ObjectImplementation( {
     name: 'RootQuery'

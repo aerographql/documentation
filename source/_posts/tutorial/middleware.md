@@ -41,7 +41,7 @@ Here are some key concepts about AeroGraphQL middlewares:
 First, write the Middleware class itself:
 
 ```javascript
-import { Middleware, BaseMiddleware } from 'aerographql-schema';
+import { Middleware, BaseMiddleware } from 'aerographql';
 
 @Middleware()
 class AuthMiddleware implements BaseMiddleware<boolean> {
