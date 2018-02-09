@@ -150,7 +150,7 @@
 <h2 id="Create-the-User-object-type"><a href="#Create-the-User-object-type" class="headerlink" title="Create the User object type"></a>Create the User object type</h2><p>Now let’s write some code:</p>
 <p>First start by creating the user type definition in <strong>main.ts</strong>:</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ObjectDefinition &#125; <span class="keyword">from</span> <span class="string">'aerographql'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ObjectDefinition</span>( &#123;</span><br><span class="line">    name: <span class="string">'User'</span></span><br><span class="line">&#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> User &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>This will create a new Typesctipt class and will implicitly create the corresponding GraphQL object type.</p>
+<p>This will create a new Typescript class and will implicitly create the corresponding GraphQL object type.</p>
 <p>You may have noticed the <strong>name</strong> field in the decorators parameters:<br>It define the name of the GraphQL object this decorated class refers to.</p>
 <p>In this case, a GraphQL object with the name <strong>User</strong> will be created.</p>
 <blockquote>

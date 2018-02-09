@@ -203,7 +203,7 @@ class MongoDBUserService {
 Note the use of the **@Inject** decorator to tell the DI system which dependency to inject.
 
 In the previous case, we use a simpler syntax:
-`constructor( private userService: UserService )` because UserService is a **class** AeroGraphQL was able to infer which dependency to inject by using the generated Typesctipt metadata.
+`constructor( private userService: UserService )` because UserService is a **class** AeroGraphQL was able to infer which dependency to inject by using the generated Typescript metadata.
 
 But when the dependency is not a class, we must explicitly tell the DI system which token to lookup for this dependency.
 

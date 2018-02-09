@@ -92,7 +92,7 @@ export class User {
 
 }
 ```
-This will create a new Typesctipt class and will implicitly create the corresponding GraphQL object type.
+This will create a new Typescript class and will implicitly create the corresponding GraphQL object type.
 
 You may have noticed the **name** field in the decorators parameters:  
 It define the name of the GraphQL object this decorated class refers to.
