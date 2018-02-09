@@ -55,6 +55,21 @@ If a string is provided it must match a name of a GraphQL object available in th
 * **description:** Description associated with this GraphQL field.  
 *Default to null*
 
+### @Inject
+
+`@Inject( token: string )`
+
+Apply this decorator on class constructor' s parameter to explicitly define the token that will be used to lookup the dependency in the Injector.
+
+**example:**
+```
+class MyService {
+    constructor( @Inject( 'MongoDBUserService' ) private userService: UserService ) {}
+}
+```
+In this case the DI system will look for a dependency identified by the **MongoDBUserService** token and inject it for the **userService** parameter
+
+
 ### @Injectable
 
 `@Injectable( )`
@@ -293,13 +308,15 @@ It's role is to convert an input value to a string corresponding to the GraphQL 
 
 ### MiddlewareInterface
 
+```typescript
 interface MiddlewareInterface<T=any> {
     execute( src: any, args: any, context: any, options: any ): T | Promise<T>;
 }
+```
 
 ### ScalarInterface
 
-```
+```typescript
 interface ScalarInterface {
     parseValue: ( value: any ) => any;
     serialize: ( value: any ) => any;
@@ -315,7 +332,7 @@ See [this medium post](https://medium.com/graphql-mastery/how-to-design-graphql-
 
 ### BaseSchema
 
-```
+```typescript
 class BaseSchema {
     rootInjector: Injector;
     graphQLSchema: GraphQLSchema;

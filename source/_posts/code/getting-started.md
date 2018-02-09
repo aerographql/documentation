@@ -1,4 +1,4 @@
-```javascript
+```typescript
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';

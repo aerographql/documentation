@@ -27,7 +27,7 @@ We will use **Interface** to declare a common base between those two inputs.
 First let's transform the Todo ObjectDefinition to an Iterface.  
 We will use the **@Interface** decorator here:
 
-```javascript
+```typescript
 
 @Interface( {
     name: 'Todo'
@@ -41,7 +41,7 @@ export class Todo {
 
 Then let's define both our PonctualTodo and Recurent Todo:
 
-```javascript
+```typescript
 @ObjectDefinition( { implements: [Todo]  } )
 export class PonctualTodo {
     @Field( { type: 'ID' } ) id: string;
@@ -71,7 +71,7 @@ Here the GraphQL name will be **RecurentTodo** and **PonctualTodo**.
 
 Don't forget to add those new type in the schema components list:
 
-```javascript
+```typescript
 @Schema( {
     rootQuery: 'RootQuery',
     components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ]
@@ -85,7 +85,7 @@ export class MySchema extends BaseSchema {
 
 Update our fake database with the new fields:
 
-```javascript
+```typescript
 
 let todos: { [ key: string ]: (PonctualTodo | RecurentTodo) [] } =
     {

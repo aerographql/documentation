@@ -29,7 +29,7 @@ yarn add typescript ts-node express @types/express body-parser @types/body-parse
 ```
 
 Then create the following Typescript config file **tsconfig.json** at the root of your  project:
-```javascript
+```typescript
 {
     "compilerOptions": {
         "target": "es6",
@@ -82,7 +82,7 @@ Now let's write some code:
 
 First start by creating the user type definition in **main.ts**:
 
-```javascript
+```typescript
 import { ObjectDefinition } from 'aerographql';
 
 @ObjectDefinition( {
@@ -108,7 +108,7 @@ In this case, a GraphQL object with the name **User** will be created.
 
 For now we just have empty objects, let's add some fields to our user using the **@Field** decorator:
 
-```javascript
+```typescript
 import { Field, ObjectDefinition, ObjectImplementation } from 'aerographql';
 
 @ObjectDefinition( {
@@ -152,7 +152,7 @@ This will be pretty usefull when implementing complex resolvers later on...
 
 Using what we already know, let's create the Todo object:
 
-```javascript
+```typescript
 import { Field, ObjectDefinition } from 'aerographql';
 
 @ObjectDefinition( {
@@ -176,7 +176,7 @@ AeroGraphQL wrap GraphQL resolvers in an elegant way by using several decorators
 
 Let's explore that:
 
-```javascript
+```typescript
 import { Resolver, Arg, ObjectImplementation } from 'aerographql';
 
 @ObjectImplementation( {
@@ -219,7 +219,7 @@ Finally, we use the **@Arg** decorator to define an argument for this field:
 At this point the core implementation of this resolver is missing, we will come to that later on.
 
 ## Create the RootQuery object type
-```javascript
+```typescript
 import { Field, ObjectImplementation } from 'aerographql';
 
 @ObjectImplementation( {
@@ -242,7 +242,7 @@ It's resolver will allow us to query for a given user using it's name as paramet
 ## Create the schema
 
 Now that all the pieces are here, let's stitch them all together using a schema:
-```javascript
+```typescript
 import { Schema, BaseSchema } from 'aerographql';
 
 @Schema( {
@@ -272,7 +272,7 @@ Note that except for the **rootQuery** attribute, everything is described using 
 
 Now let's expose this schema using an [Apollo express server](https://www.apollographql.com/docs/apollo-server/):
 
-```javascript
+```typescript
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
@@ -319,7 +319,7 @@ To solve that, we are going to quickly implement the **RootQuery.user** resolver
 
 First add a dummy list of users and then change our resolver implementation:  
 
-```javascript
+```typescript
 let users: User[] = [
     { admin: false, age: 25, description: 'Description of Bob', name: 'Bob', id: '0'},
     { admin: true, age: 36, description: 'Description of Alice', name: 'Alice', id: '1'},
@@ -359,7 +359,7 @@ Now let's try this new query:
 You should get the following error: `Cannot return null for non-nullable field User.todos.`
 
 Let's implement the user's todos resolver correctly:
-```javascript
+```typescript
 let todos: { [ key: string ]: Todo[] } =
     {
         Bob: [

@@ -40,7 +40,7 @@ Here are some key concepts about AeroGraphQL middlewares:
 
 First, write the Middleware class itself:
 
-```javascript
+```typescript
 import { Middleware, MiddlewareInterface } from 'aerographql';
 
 @Middleware()
@@ -71,7 +71,7 @@ In our case we like to call this middleware on a new endpoint: **viewer** which 
 
 Change our RootQuery implementation:
 
-```javascript
+```typescript
 @ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
     constructor( private userService: UserService ) { }
@@ -121,7 +121,7 @@ Then implement a fake ExpressJS middleware that will inject a new header in the 
 
 *This token should normally be provided by the original request* 
 
-```javascript
+```typescript
 let fakeJWT = ( req: any, rep: any, next: any ) => {
     req.headers[ 'Authorization' ] = jsonwebtoken.sign( { name: "Bob" }, 'secret' );
     next();
@@ -130,13 +130,13 @@ let fakeJWT = ( req: any, rep: any, next: any ) => {
 
 Then add this middleware to ExpressJs, before the Apollo server middleware:
 
-```javascript
+```typescript
 this.app.use( '/graphql', bodyParser.json(), fakeJWT, graphqlExpress( { schema: mySchema.graphQLSchema } ) );
 ```
 
 Pass the ExpressJs request object down to the GraphQL context: 
 
-```javascript
+```typescript
 this.app.use( '/graphql', bodyParser.json(), fakeJWT, graphqlExpress( ( req ) => {
     return { schema: mySchema.graphQLSchema, context: { req } };
 } ) );
@@ -144,7 +144,7 @@ this.app.use( '/graphql', bodyParser.json(), fakeJWT, graphqlExpress( ( req ) =>
 
 Now everything is in place to implement the middleware itself...
 
-```javascript
+```typescript
 interface Context {
     req: express.Request;
     user: User; // We will come back to this field later
@@ -187,7 +187,7 @@ Well, actually, it just get lost.
 The **AuthMiddleware** succeed because a truthy value was returned, but this value was not stored anywhere.  
 
 To remediate, change the RootQuery **@ObjectImplementation** configuration where this middleware is used:
-```javascript
+```typescript
 @ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
     constructor( private userService: UserService ) { }
@@ -219,7 +219,7 @@ The viewer query resolver should execute the **AuthMiddleware** beforehand which
 
 **Congratulation, you now have a fully operational middleware.**
 
-# Conclusion
+## Conclusion
 
 This episode conclude our tutorial on AeroGraphQL basic features !
 

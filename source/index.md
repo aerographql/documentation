@@ -37,7 +37,7 @@ export class UserType {
 
 Implement your resolvers:
 
-```javascript
+```typescript
 @ObjectImplementation( {
     name: 'RootQuery'
 } )
@@ -55,7 +55,7 @@ export class RootQuery {
 
 Compose your Schema:
 
-```javascript
+```typescript
 @Schema( {
     rootQuery: 'RootQuery',
     components:[ UserType, RootQuery ]
@@ -69,7 +69,7 @@ export class MySchema extends BaseSchema {
 Then inject this schema in your favorite GraphQL server.  
 [Apollo Server](https://www.apollographql.com/docs/apollo-server/) with [Express](http://expressjs.com/fr/) in this case:
 
-```javascript
+```typescript
 let mySchema = new MySchema();
 this.app = express();
 this.app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema: mySchema.graphQLSchema } );

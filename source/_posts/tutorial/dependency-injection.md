@@ -16,7 +16,7 @@ We'll use the final source code of the {% post_link code/interface-and-union pre
 
 Let's have a look at the current implementation of our RootQuery User's resolver:
 
-```javascript
+```typescript
 @ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
 
@@ -43,7 +43,7 @@ Most of the time, you will use DI (Dependency Injection) to create services.
 
 We start by writing the service itself:
 
-```javascript
+```typescript
 
 import { Injectable } from 'aerographql';
 
@@ -62,7 +62,7 @@ This decorator will force Typescript to emit metadata that will be use by AeroGr
 
 Now let's change our RootQuery to use a new **UserService** that will handle all the database communication logic:
 
-```javascript
+```typescript
 @ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
     constructor( private userService: UserService ) {}
@@ -180,7 +180,7 @@ This kind of provider won't be *instanciated* with the new operator like a facto
 
 Here is how to pass a single value as a provider:
 
-```javascript
+```typescript
 import { Inject } from 'aerographql';
 
 // First configure the schema internal injector
