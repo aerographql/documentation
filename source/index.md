@@ -43,9 +43,7 @@ Implement your resolvers:
 } )
 export class RootQuery {
 
-    constructor(
-        private userService: UserService
-    ) {
+    constructor( private userService: UserService ) {
     }
 
     @Resolver( { type: UserType } )
@@ -68,7 +66,7 @@ export class MySchema extends BaseSchema {
 
 ```
 
-Then plug this schema in your favorite GraphQL server.  
+Then inject this schema in your favorite GraphQL server.  
 [Apollo Server](https://www.apollographql.com/docs/apollo-server/) with [Express](http://expressjs.com/fr/) in this case:
 
 ```javascript
