@@ -103,7 +103,7 @@ A provider is something that will tell the injector how to *provide* a given dep
 
 A list of providers can be passed to the AeroGraphQL schema in order to configure it's own injector:
 
-```javacript
+```typescript
 @Schema( {
     rootQuery: 'RootQuery',
     components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ],
@@ -120,7 +120,7 @@ export class MySchema extends BaseSchema {
 Here we directly pass the **UserService** class as a provider.  
 Like with the Angular DI system, this is a shorthand for a more complete syntax using a provider object :
 
-```javacript
+```typescript
 @Schema( {
     rootQuery: 'RootQuery',
     components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ],
@@ -139,7 +139,7 @@ Imagine that you have two implementations of the UserService:
 
 Using the DI system you can configure your whole application to use a specific implementation without even changin a single line of code in any class that depend on this dependency:
 
-```javacript
+```typescript
 // For a dependency identified by the 'UserService' token, provide the Mongodb implementation
 @Schema( {
 ...

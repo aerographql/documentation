@@ -19,11 +19,13 @@ toc: false
 
 * Run your server using any GraphQL server, like the well known [Apollo Server](https://www.apollographql.com/docs/apollo-server/).
 
-# What it look like ?
+# What does it look like ?
 
-Define your schema types using Typescript annotation:
+The goal of AeroGraphQL is to automaticly create the GraphQL schema while you write your Typescript *business objects*, so you don't need to maintain a separate GraphQL schema definition aside of their implementations.
 
-```javaScript
+First, define your schema object's types using Typescript annotation:
+
+```typescript
 @ObjectDefinition( { name: 'User' } )
 export class UserType {
     @Field( { type: 'ID' } ) id: string;
@@ -32,14 +34,13 @@ export class UserType {
 }
 ```
 
-Implement your resolver:
+Then implement your resolver:
 
 ```typescript
 @ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
 
-    constructor( private userService: UserService ) {
-    }
+    constructor( private userService: UserService ) { }
 
     @Resolver( { type: UserType } )
     user( @Arg() name: String ) {
@@ -56,7 +57,6 @@ Compose your Schema:
     components:[ UserType, RootQuery ]
 } )
 export class MySchema extends BaseSchema {
-
 }
 
 ```
@@ -95,4 +95,6 @@ With each resolvers automaticaly wired to their implementations.
 
 # Where to go next ?
 
-**Follow the {% post_link tutorial/getting-started Getting started guide %} to learn more about AeroGraphQL !**
+**Follow the {% post_link tutorial/getting-started Getting started guide %} to learn more about AeroGraphQL !**  
+or  
+**Checkout the {% post_link api API references %}.**
