@@ -1,5 +1,5 @@
 ---
-title: AeroGraphQL
+title: Home
 layout: page
 toc: false
 ---

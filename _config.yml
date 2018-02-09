@@ -1,5 +1,5 @@
 # Site
-title: Aerographql documentation
+title: AeroGraphQL documentation
 description: This is the documentation of AeroGraphQL. AeroGraphQL is an opinionated Typescript framework to create GraphQL server using a declarative approach. 
 keyword: node graphql typescript aerographql documentation doc
 
@@ -48,7 +48,7 @@ menu:
     url: /
  Documentations: 
     url: /docs/
- Api: 
+ API: 
     url: /api/
  Github: 
     url: https://github.com/aerographql

@@ -1,5 +1,5 @@
 ---
-title: Api reference
+title: API
 layout: page
 toc: true
 ---
