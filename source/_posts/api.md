@@ -6,7 +6,9 @@ toc: true
 
 # Decorators
 
-### @Arg( ArgConfig )
+### @Arg
+
+`@Arg( config: ArgConfig )`
 
 Apply this decorator to a **@Resolver** 's parameter to associate it  with a GraphQL argument on the field defined by the resolver.
 
@@ -29,7 +31,9 @@ If a string is provided, it must match a name of a GraphQL object available in t
 *Default to the type of the function parameter infered from Typescript metadata*
 
 
-### @Field( FieldConfig )
+### @Field
+
+`@Field( config: FieldConfig )`
 
 Apply this decorator on a member of a class decorated with **@ObjectDefinition** to associate it with a GraphQL field on the object.
 
@@ -51,8 +55,16 @@ If a string is provided it must match a name of a GraphQL object available in th
 * **description:** Description associated with this GraphQL field.  
 *Default to null*
 
+### @Injectable
 
-### @InputObject( InputObjectConfig )
+`@Injectable( )`
+
+Apply this decorator on a class to tag to make it injectable within the dependency injection system.  
+
+
+### @InputObject
+
+`@InputObject( config: InputObjectConfig )`
 
 Apply this decorator on a class to create a new GraphQL input
 
@@ -70,7 +82,9 @@ interface InputObjectConfig {
 * **description:** Description associated with this GraphQL input.  
 *Default to null*
 
-### @Interface( InterfaceConfig )
+### @Interface
+
+`@Interface( config: InterfaceConfig )`
 
 Apply this decorator on a class to create a new GraphQL interface
 
@@ -95,8 +109,18 @@ However if this logic does not suit your needs you can override it by providing 
 It's role is to convert an input value to a string corresponding to the GraphQL object type name.  
 *Default to null*
 
+### @Middleware
 
-### @ObjectDefinition( ObjectDefinitionConfig )
+`@Middleware( )`
+
+Apply this decorator on a class to tag it as an AeroGraphQL middleware.  
+
+*Any class decorated with **@Schema** must implement the MiddlewareInterface interface.*
+
+
+### @ObjectDefinition
+
+`@ObjectDefinition( config: ObjectDefinitionConfig )`
 
 Apply this decorator on a class to create a new GraphQL object with only fields.  
 Or to add fields to an existing GraphQL object with the same name.
@@ -118,7 +142,9 @@ interface ObjectDefinitionConfig {
 * **implements:** Specify which GraphQL interface this object implement.   
 *Default to []*
 
-### @ObjectImplementation( ObjectImplementationConfig )
+### @ObjectImplementation
+
+`@ObjectImplementation( config: ObjectImplementationConfig )`
 
 Apply this decorator on a class to create a new GraphQL object with only resolvers.  
 Or to add resolvers to an existing GraphQL object with the same name.
@@ -153,7 +179,9 @@ export interface MiddlewareDescriptor {
     * **options** Option passed to the middleware  
     * **resultName** A field name reachable in the GraphQL context, where the result of this middleware will be stored   
 
-### @Resolver( ResolverConfig )
+### @Resolver
+
+`@Resolver( config: ResolverConfig )`
 
 Apply this decorator on a method of a class decorated with **@ObjectImplementation** to associate it with a GraphQL resolver on the object.
 
@@ -185,7 +213,9 @@ A reference to a AeroGraphQL annotated class can be passed.
 If middleware were defined at the ObjectImplementation level, they will be overided by those one.  
 *Default to []*
 
-### @Scalar( ScalarConfig )
+### @Scalar
+
+`@Scalar( config: ScalarConfig )`
 
 Apply this decorator on a class to create a new GraphQL scalar.  
 
@@ -204,7 +234,9 @@ interface ScalarConfig {
 * **description:** Description associated with this GraphQL scalar.  
 *Default to null*
 
-### @Schema( SchemaConfig )
+### @Schema
+
+`@Schema( config: SchemaConfig )`
 
 Apply this decorator on a class to create a new GraphQL schema.  
 
@@ -229,8 +261,9 @@ interface SchemaConfig {
 
 * **components:** List of reference to decorated class that are part of this schema.
 
+### @Union
 
-### @Union( UnionConfig )
+`@Union( config: UnionConfig )`
 
 Apply this decorator on a class to create a new GraphQL union.  
 
@@ -257,6 +290,12 @@ It's role is to convert an input value to a string corresponding to the GraphQL 
 *Default to null*
 
 # Interfaces
+
+### MiddlewareInterface
+
+interface MiddlewareInterface<T=any> {
+    execute( src: any, args: any, context: any, options: any ): T | Promise<T>;
+}
 
 ### ScalarInterface
 

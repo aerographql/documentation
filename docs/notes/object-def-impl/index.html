@@ -138,20 +138,24 @@
 <li><strong>@Input()</strong> to create a GraphQL input</li>
 <li><strong>@Uniont()</strong> to create a GraphQL union</li>
 </ul>
-<p>But to create a GraphQL object AeroGraphQL provide two decorators <strong>@ObjectDefinition</strong> and <strong>@ObjectImplementation</strong>.</p>
+<p>But to create a GraphQL object AeroGraphQL provide two decorators:</p>
+<ul>
+<li><strong>@ObjectDefinition</strong> </li>
+<li><strong>@ObjectImplementation</strong></li>
+</ul>
 <p>We recap here what are their differences and how they work together to create a full GraphQL object:</p>
-<h2 id="GraphQL-object’s-structure"><a href="#GraphQL-object’s-structure" class="headerlink" title="GraphQL object’s structure:"></a>GraphQL object’s structure:</h2><p>The Final GraphQL Object’s structure is:<br><strong>the union of every fields and every resolvers defined in every @ObjectDefinition and @ObjectImplementation annotated class sharing the same GraphQL name</strong></p>
+<h2 id="GraphQL-object’s-structure"><a href="#GraphQL-object’s-structure" class="headerlink" title="GraphQL object’s structure:"></a>GraphQL object’s structure:</h2><p>The Final GraphQL Object’s structure as exposed by the schema is:<br><strong>the union of each fields and each resolvers defined in every @ObjectDefinition and @ObjectImplementation class sharing the same GraphQL name</strong></p>
 <blockquote>
-<p>Both decorator must be provided with a configuration object. This object contain a name field which identify GraphQL object the class refers to.</p>
+<p>Both decorators must be provided with a configuration object. This object contain a <strong>name</strong> field which identify GraphQL object the class refers to:<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ObjectDefinition</span>( &#123; name: <span class="string">'User'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> User &#123; ... &#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">@ObjectImplementation</span>( &#123; name: <span class="string">'User'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UserImpl &#123; ... &#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<h2 id="Field-and-resolvers"><a href="#Field-and-resolvers" class="headerlink" title="Field and resolvers"></a>Field and resolvers</h2><p>In GraphQL terms:</p>
+<h2 id="Fields-and-Resolvers"><a href="#Fields-and-Resolvers" class="headerlink" title="Fields and Resolvers"></a>Fields and Resolvers</h2><p>In GraphQL terms:</p>
 <ul>
 <li>a <strong>@Field</strong> is a <a href="http://graphql.org/learn/queries/#fields" target="_blank" rel="noopener">field without argument</a></li>
-<li>a <strong>@Resolver</strong> is a <a href="http://graphql.org/learn/queries/#arguments" target="_blank" rel="noopener">field with arguments</a> and an associated resolve function.</li>
+<li>a <strong>@Resolver</strong> is a <a href="http://graphql.org/learn/queries/#arguments" target="_blank" rel="noopener">field with arguments</a> and an associated resolver function.</li>
 </ul>
-<p><strong>@Field</strong> can only be defined in <strong>@ObjectDefinition</strong> while <strong>@Resolver</strong> can only be defined in <strong>ObjectImplementation</strong>  </p>
-<h2 id="ObjectImplementation-and-dependency-injection"><a href="#ObjectImplementation-and-dependency-injection" class="headerlink" title="ObjectImplementation and dependency injection"></a>ObjectImplementation and dependency injection</h2><p>While classes annotated with <strong>@ObjectDefinition</strong> are never instanciated by AeroGraphQL, classes annotated with <strong>@ObjectImplementation</strong> are automatically instanciated by AeroGraphQL.</p>
-<p>The reason is that ObjectImplementation are meant to be used within the dependency injection system in order to interact with Services defining the Busines logic, while ObjectDefinition are meant to be used as ‘model’ for your database schema.</p>
+<p>In AeroGraphQL <strong>@Field</strong> can only be defined in <strong>@ObjectDefinition</strong> while <strong>@Resolver</strong> can only be defined in <strong>ObjectImplementation</strong>  </p>
+<h2 id="Intended-usages"><a href="#Intended-usages" class="headerlink" title="Intended usages"></a>Intended usages</h2><p>While classes annotated with <strong>@ObjectDefinition</strong> are never instanciated by AeroGraphQL, classes annotated with <strong>@ObjectImplementation</strong> are automatically instanciated by AeroGraphQL.</p>
+<p>The reason is that ObjectImplementation are meant to be used within the dependency injection system in order to interact with Services defining the Busines logic, while ObjectDefinition are meant to be used as <strong>model</strong> for your database schema.</p>
 
         </section>
     </article>
@@ -160,7 +164,7 @@
   <div class="toc-main">
     <strong class="toc-title">Content</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Object-Definition-and-Implementation"><span class="toc-nav-text">Object Definition and Implementation</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#GraphQL-object’s-structure"><span class="toc-nav-text">GraphQL object’s structure:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Field-and-resolvers"><span class="toc-nav-text">Field and resolvers</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ObjectImplementation-and-dependency-injection"><span class="toc-nav-text">ObjectImplementation and dependency injection</span></a></li></ol></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Object-Definition-and-Implementation"><span class="toc-nav-text">Object Definition and Implementation</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#GraphQL-object’s-structure"><span class="toc-nav-text">GraphQL object’s structure:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Fields-and-Resolvers"><span class="toc-nav-text">Fields and Resolvers</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Intended-usages"><span class="toc-nav-text">Intended usages</span></a></li></ol></li></ol>
     
   </div>
 </aside>

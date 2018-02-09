@@ -41,10 +41,10 @@ Here are some key concepts about AeroGraphQL middlewares:
 First, write the Middleware class itself:
 
 ```javascript
-import { Middleware, BaseMiddleware } from 'aerographql';
+import { Middleware, MiddlewareInterface } from 'aerographql';
 
 @Middleware()
-class AuthMiddleware implements BaseMiddleware<boolean> {
+class AuthMiddleware implements MiddlewareInterface<boolean> {
     execute( src: any, args: any, context: any, options: any ) {
         console.log( 'From the middleware' );
         return true;
@@ -54,9 +54,9 @@ class AuthMiddleware implements BaseMiddleware<boolean> {
 
 The key points here are:
 * We use the **@Middleware** decorator to tag this class as a Middleware
-* We implement the BaseMiddleware interface.
+* We implement the MiddlewareInterface interface.
 
-> The BaseMiddleware interface take a Generic parameter that represent the type returned by the middleware.
+> The MiddlewareInterface interface take a Generic parameter that represent the type returned by the middleware.
 
 Let's have a look at the signature of the **execute** function:  
 It's take four parameters.  
@@ -151,7 +151,7 @@ interface Context {
 }
 
 @Middleware()
-class AuthMiddleware implements BaseMiddleware<any> {
+class AuthMiddleware implements MiddlewareInterface<any> {
     constructor( private userService: UserService ) { }
     execute( src: any, args: any, context: Context, options: any ) {
         let token  = context.req.headers[ 'Authorization' ] as string;
