@@ -347,16 +347,19 @@ pre {
 }
 .markdown-content h2 {
   font-size: 1.5em;
+  margin-left: 1rem;
 }
 .markdown-content h3 {
   margin: 1em 0;
   font-size: 1.3em;
   padding-bottom: 0.3em;
+  margin-left: 2rem;
   border-bottom: 1px solid #e5e5e5;
 }
 .markdown-content h4 {
   margin: 1em 0;
   font-size: 1.2em;
+  margin-left: 2.5rem;
 }
 .markdown-content h4:before {
   content: "#";
@@ -381,6 +384,7 @@ pre {
 .markdown-content ol {
   overflow: auto;
   margin: 15px 0;
+  padding-left: 20px;
 }
 .markdown-content ul li,
 .markdown-content ol li {
