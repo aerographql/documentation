@@ -4,7 +4,9 @@ layout: page
 toc: true
 ---
 
-# Decorators
+# Public API
+
+## Decorators
 
 ### @Arg
 
@@ -29,7 +31,6 @@ interface ArgConfig {
 * **type:** Define the type of this argument.  
 If a string is provided, it must match a name of a GraphQL object available in the final schema.  
 *Default to the type of the function parameter infered from Typescript metadata*
-
 
 ### @Field
 
@@ -304,7 +305,7 @@ However if this logic does not suit your needs you can override it by providing 
 It's role is to convert an input value to a string corresponding to the GraphQL object type name.  
 *Default to null*
 
-# Interfaces
+## Interfaces
 
 ### MiddlewareInterface
 
@@ -328,7 +329,7 @@ Any class decorated with **@Scalar** must implement this interface.
 
 See [this medium post](https://medium.com/graphql-mastery/how-to-design-graphql-queries-and-mutations-part-3-custom-scalars-78d441869258) to learn more about how to implement those methods.
 
-# Class
+## Class
 
 ### BaseSchema
 
@@ -344,3 +345,72 @@ Any class decorated with **@Schema** must derive from this base class.
 After instanciation of a class deriving from **BaseSchema**, the user will have access to:
 * **rootInjector** : The internal Injector stored in this schema
 * **graphQLSchema** : The standard GraphQL schema that can be later on used by any GraphQL compliant server 
+
+# Test API
+
+## Class
+
+### TestServer
+
+```typescript
+class TestServer {
+    constructor( schema: BaseSchema, context: any = null );
+    execute<T = any>( query: string, vars: any = null, operationName: string = null ) : Promise<T> ;
+}
+```
+
+Use this class to write end-to-end test for a given GraphQL query.  
+
+**example:**
+```typescript
+it( 'should execute query correctly', () => {
+    let schema = new MySchema();
+    let s = new TestServer( schema );
+    let q = `{ query { fieldA fieldB } }`
+    return expect( s.execute( q ) ).resolves.toEqual( { data: { query2: { fieldA: 0, fieldB: 0 } } } );
+} )
+```
+
+## Function
+
+### createInjectable
+
+```typescript
+function createInjectable<T=any>( ctr: Function, additionalProviders: ( Function | Provider )[] = [] ): T 
+```
+
+### executeMiddlewares
+
+```typescript
+interface ExecuteMiddlewaresArgs {
+    source?: any;
+    args?: any;
+    context?: any
+}
+
+function executeMiddlewares( descs: MiddlewareDescriptor[], args: ExecuteMiddlewaresArgs = {}, additionalProviders: ( Function | Provider )[] = [] ): Promise<any[]>
+```
+
+Create and configure a middleware chain ready to be tested.
+
+**example:**
+```typescript
+it( 'should store middlewares results', () => {
+    @Middleware()
+    class MA implements MiddlewareInterface<string> {
+        execute( src: any, args: any, context: any, options: any ) { return 'A'; }
+    }
+
+    let descs: MiddlewareDescriptor[] = [
+        { provider: MA,  resultName: 'A' }
+    ];
+    let context: any = {};
+    let p = executeMiddlewares( descs, { context } ).then( ( result ) => {
+        expect( context ).toEqual( { A: 'A' } );
+        return result;
+    } );
+    return expect( p ).resolves.toBeTruthy();
+} );
+```
+
+
