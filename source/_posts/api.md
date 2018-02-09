@@ -8,7 +8,7 @@ toc: true
 
 ## Decorators
 
-### @Arg
+#### @Arg
 
 `@Arg( config: ArgConfig )`
 
@@ -32,7 +32,7 @@ interface ArgConfig {
 If a string is provided, it must match a name of a GraphQL object available in the final schema.  
 *Default to the type of the function parameter infered from Typescript metadata*
 
-### @Field
+#### @Field
 
 `@Field( config: FieldConfig )`
 
@@ -56,7 +56,7 @@ If a string is provided it must match a name of a GraphQL object available in th
 * **description:** Description associated with this GraphQL field.  
 *Default to null*
 
-### @Inject
+#### @Inject
 
 `@Inject( token: string )`
 
@@ -71,14 +71,14 @@ class MyService {
 In this case the DI system will look for a dependency identified by the **MongoDBUserService** token and inject it for the **userService** parameter
 
 
-### @Injectable
+#### @Injectable
 
 `@Injectable( )`
 
 Apply this decorator on a class to tag to make it injectable within the dependency injection system.  
 
 
-### @InputObject
+#### @InputObject
 
 `@InputObject( config: InputObjectConfig )`
 
@@ -98,7 +98,7 @@ interface InputObjectConfig {
 * **description:** Description associated with this GraphQL input.  
 *Default to null*
 
-### @Interface
+#### @Interface
 
 `@Interface( config: InterfaceConfig )`
 
@@ -125,7 +125,7 @@ However if this logic does not suit your needs you can override it by providing 
 It's role is to convert an input value to a string corresponding to the GraphQL object type name.  
 *Default to null*
 
-### @Middleware
+#### @Middleware
 
 `@Middleware( )`
 
@@ -134,7 +134,7 @@ Apply this decorator on a class to tag it as an AeroGraphQL middleware.
 *Any class decorated with **@Schema** must implement the MiddlewareInterface interface.*
 
 
-### @ObjectDefinition
+#### @ObjectDefinition
 
 `@ObjectDefinition( config: ObjectDefinitionConfig )`
 
@@ -158,7 +158,7 @@ interface ObjectDefinitionConfig {
 * **implements:** Specify which GraphQL interface this object implement.   
 *Default to []*
 
-### @ObjectImplementation
+#### @ObjectImplementation
 
 `@ObjectImplementation( config: ObjectImplementationConfig )`
 
@@ -195,7 +195,7 @@ export interface MiddlewareDescriptor {
     * **options** Option passed to the middleware  
     * **resultName** A field name reachable in the GraphQL context, where the result of this middleware will be stored   
 
-### @Resolver
+#### @Resolver
 
 `@Resolver( config: ResolverConfig )`
 
@@ -229,7 +229,7 @@ A reference to a AeroGraphQL annotated class can be passed.
 If middleware were defined at the ObjectImplementation level, they will be overided by those one.  
 *Default to []*
 
-### @Scalar
+#### @Scalar
 
 `@Scalar( config: ScalarConfig )`
 
@@ -250,7 +250,7 @@ interface ScalarConfig {
 * **description:** Description associated with this GraphQL scalar.  
 *Default to null*
 
-### @Schema
+#### @Schema
 
 `@Schema( config: SchemaConfig )`
 
@@ -277,7 +277,7 @@ interface SchemaConfig {
 
 * **components:** List of reference to decorated class that are part of this schema.
 
-### @Union
+#### @Union
 
 `@Union( config: UnionConfig )`
 
@@ -307,7 +307,7 @@ It's role is to convert an input value to a string corresponding to the GraphQL 
 
 ## Interfaces
 
-### MiddlewareInterface
+#### MiddlewareInterface
 
 ```typescript
 interface MiddlewareInterface<T=any> {
@@ -315,7 +315,7 @@ interface MiddlewareInterface<T=any> {
 }
 ```
 
-### ScalarInterface
+#### ScalarInterface
 
 ```typescript
 interface ScalarInterface {
@@ -331,7 +331,7 @@ See [this medium post](https://medium.com/graphql-mastery/how-to-design-graphql-
 
 ## Class
 
-### BaseSchema
+#### BaseSchema
 
 ```typescript
 class BaseSchema {
@@ -350,7 +350,7 @@ After instanciation of a class deriving from **BaseSchema**, the user will have 
 
 ## Class
 
-### TestServer
+#### TestServer
 
 ```typescript
 class TestServer {
@@ -373,13 +373,13 @@ it( 'should execute query correctly', () => {
 
 ## Function
 
-### createInjectable
+#### createInjectable
 
 ```typescript
 function createInjectable<T=any>( ctr: Function, additionalProviders: ( Function | Provider )[] = [] ): T 
 ```
 
-### executeMiddlewares
+#### executeMiddlewares
 
 ```typescript
 interface ExecuteMiddlewaresArgs {

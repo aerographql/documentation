@@ -8,10 +8,10 @@ toc: true
 
 This guide will provide you a step by step tutorial to setup a full GraphQL server that will provide an API to manipulate a multiple users todo list.
 
-*In this tutorial, i'm using yarn. This will work the same with npm.*
+*In this tutorial, we'll be using yarn. This will work the same with npm.*
 
 > This tutorial assume you are already familiar with GraphQL schema definition and Typescript.  
-If you are not, first read [this documentation about GraphQL Schema](http://graphql.org/learn/schema/) and [this documentation or a Typescript intro](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+If you are not, first read [this documentation about GraphQL Schema](http://graphql.org/learn/schema/) and [this documentation for a Typescript intro](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 
 
 **The full source code for this tutorial can be found {% post_link code/getting-started here %}**.
@@ -19,7 +19,7 @@ If you are not, first read [this documentation about GraphQL Schema](http://grap
 ## Setup
 
 First setup a new nodejs project with **Typescript**.  
-We also install [**ts-node**](https://github.com/TypeStrong/ts-node) as it will make our life easier.
+We will install [**ts-node**](https://github.com/TypeStrong/ts-node) as it will make our life easier avoiding us the need to explicitly build Typescript code.
 
 ```
 mkdir todo
@@ -69,7 +69,7 @@ In your **package.json** add a script to run the server:
 
 Finally install **aerographql** AND **graphql**:
 
-> Graphql is a peer dependency of AeroGraphQL and must be explicitly installed
+> Graphql is a peer dependency of AeroGraphQL and must be explicitly installed ( need graphql >= 0.9.0 )
 
 ```
 yarn add graphql aerographql 
@@ -85,9 +85,7 @@ First start by creating the user type definition in **main.ts**:
 ```typescript
 import { ObjectDefinition } from 'aerographql';
 
-@ObjectDefinition( {
-    name: 'User'
-} )
+@ObjectDefinition( { name: 'User' } )
 export class User {
 
 }
@@ -95,14 +93,12 @@ export class User {
 This will create a new Typescript class and will implicitly create the corresponding GraphQL object type.
 
 You may have noticed the **name** field in the decorators parameters:  
-It define the name of the GraphQL object this decorated class refers to.
+**It define the name of the GraphQL object this decorated class refers to.**
 
 In this case, a GraphQL object with the name **User** will be created.
 
-> ---
 > * **@ObjectDefinition** allow to declare a new GraphQL Type
 > * The graphql object name is defined by the name field of the decorator (Not the name of the class)
-> ---
 
 ## Declare fields
 
@@ -111,9 +107,7 @@ For now we just have empty objects, let's add some fields to our user using the 
 ```typescript
 import { Field, ObjectDefinition, ObjectImplementation } from 'aerographql';
 
-@ObjectDefinition( {
-    name: 'User'
-} )
+@ObjectDefinition( { name: 'User' } )
 export class User {
     @Field( { type: 'ID' }) id: string;
     @Field() name: string = "";
@@ -136,10 +130,8 @@ import { ID } from 'aerographql';
 ..
 ```
 
-> ---
 > * **@Field** decorate allow to create a simple GraphQL field.
 > * **@Field** are only defined within an @ObjectDefinition class
-> ---
 
 **On thing to note:**  
 At this point the typescript **User** class is perfectly valid and can be used as any regular javascript object:  
@@ -155,9 +147,7 @@ Using what we already know, let's create the Todo object:
 ```typescript
 import { Field, ObjectDefinition } from 'aerographql';
 
-@ObjectDefinition( {
-    name: 'Todo'
-} )
+@ObjectDefinition( { name: 'Todo' } )
 export class Todo {
     @Field( { type: 'ID' }) id: string;
     @Field() title: string = "";
@@ -179,9 +169,7 @@ Let's explore that:
 ```typescript
 import { Resolver, Arg, ObjectImplementation } from 'aerographql';
 
-@ObjectImplementation( {
-    name: 'User'
-} )
+@ObjectImplementation( { name: 'User' } )
 export class UserImpl {
 
     @Resolver( { type: Todo } ) 
@@ -201,20 +189,17 @@ Then use the **@Resolver** decorator to declare a specific resolver.
 * The name of the field associated with this resolver is the name of the method, here **todos**.
 * The type of this field is defined in the **@Resolver** parameter's **type** attribute, here **Todo**.  
 
-*Note that here we pass a class not a string, we could also use plain string: `@Resolver( { type: 'Todo' } )`  
-While this sound similar, the first way is the prefered one, as it will be more easier for your IDE to refactor code and to track changes.*
+> Here, note that we pass a class not a string, we could also use plain string: `@Resolver( { type: 'Todo' } )`  
+> While this sound similar, the first way is the prefered one, as it will be more easier for your IDE to refactor code and to track changes.
 
 Finally, we use the **@Arg** decorator to define an argument for this field:  
 * The name of the argument in GraphQL will be the name of the argument as defined here in Typescript.
 * It's type will be infered by AeroGraphQL from the Typescript type annotation
 * It will be a nullable parameter ( **nullable: true** )
 
-
-> ---
 > * **@Resolver** decorator allow to create a field on a GraphQL object type and to provide it's resolver implementation.
 > * **@Resolver** are only defined within an @Ibjectimplementation class
 > * **@Arg** decorator define an argument for the resolver.
-> ---
 
 At this point the core implementation of this resolver is missing, we will come to that later on.
 
@@ -222,9 +207,7 @@ At this point the core implementation of this resolver is missing, we will come 
 ```typescript
 import { Field, ObjectImplementation } from 'aerographql';
 
-@ObjectImplementation( {
-    name: 'RootQuery'
-} )
+@ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
 
     @Resolver( { type: User } )
@@ -258,14 +241,13 @@ Here we declare a GraphQL shema composed of various components listed in the **c
 Once again, pretty straightforward.  
 Note that except for the **rootQuery** attribute, everything is described using explicit types, once again, this will helps during refactoring times.
 
-> ---
 > Components are any class annotated with the following AeroGraphQL decorators:
 > * **@ObjectDefinition**
 > * **@ObjectImplementation**
 > * **@Scalar**
 > * **@Interface**
 > * **@Input** 
-> ---
+> * **@Union** 
 
 
 ## Expose this schema 
@@ -286,14 +268,13 @@ this.app.listen( 3000, () => {
 } );
 ```
 
-> ---
-> They key point here is that AeroGraphQL provide you a valid GraphQL schema that can be directly provided to any GraphQL compliant server.  
-> This schema is automatically builded with all it's resolver correctly wired, so just have to inject it.
->
+> **They key point here is that AeroGraphQL provide you a valid GraphQL schema that can be directly provided to any GraphQL compliant server.  
+> This schema is automatically builded with all it's resolvers correctly wired, so just have to inject it.**
+
+
 > The BaseSchema expose 2 members:
 > * **graphQLSchema**: Which is the final GraphQL Schema to use
 > * rootInjector: Which will be used later on...
-> ---
 
 ## Implement our resolvers
 
@@ -328,9 +309,7 @@ let users: User[] = [
 
 import { Field, ObjectImplementation } from 'aerographql';
 
-@ObjectImplementation( {
-    name: 'RootQuery'
-} )
+@ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
 
     @Resolver( { type: User } )
@@ -377,9 +356,7 @@ let todos: { [ key: string ]: Todo[] } =
             { id: '8', title: 'Todo3', content: 'Steeve Todo3 content' } ]
     };
 
-@ObjectImplementation( {
-    name: 'User'
-} )
+@ObjectImplementation( { name: 'User' } )
 export class UserImpl {
 
     @Resolver( { type: Todo, list: true} )

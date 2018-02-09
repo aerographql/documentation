@@ -153,12 +153,10 @@
 <p>Here, we just tell the RootQuery class, that it depend on a depency called <strong>UserService</strong>.<br>This dependency will be automatically injected into the root query class instance when needed.</p>
 <p><em>This automatic resolution was possible because the UserService was decorated with he <strong>@Injectable</strong> decorator.</em></p>
 <blockquote>
-<hr>
 <ul>
 <li>To define a dependency simply add a constructor to the desired class, and add to that constructor a parameter matching the desired dependency.  </li>
 <li>AeroGraphQL will use the Typescript type annotation to correctly instanciate and inject the dependency.  </li>
 </ul>
-<hr>
 </blockquote>
 <p><strong> AeroGraphQL DI system is heavily inspired by the <a href="https://angular.io/guide/dependency-injection" target="_blank" rel="noopener">Angular DI system</a> </strong></p>
 <p>To make this example fully operational, we need to inform AeroGraphQL how and <strong>what</strong> to inject when someone is requesting the <strong>UserService</strong> dependency.</p>
@@ -172,9 +170,7 @@
 <p>A list of providers can be passed to the AeroGraphQL schema in order to configure it’s own injector:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Schema( &#123;</span><br><span class="line">    rootQuery: &apos;RootQuery&apos;,</span><br><span class="line">    components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ],</span><br><span class="line">    providers: [ UserService ]</span><br><span class="line">&#125; )</span><br><span class="line">export class MySchema extends BaseSchema &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<hr>
 <p>We use the <strong>providers</strong> field of the <strong>@Schema</strong> decorator to pass additional provider to the internal Schema Injector</p>
-<hr>
 </blockquote>
 <h3 id="The-provider-object"><a href="#The-provider-object" class="headerlink" title="The provider object"></a>The provider object</h3><p>Here we directly pass the <strong>UserService</strong> class as a provider.<br>Like with the Angular DI system, this is a shorthand for a more complete syntax using a provider object :</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Schema( &#123;</span><br><span class="line">    rootQuery: &apos;RootQuery&apos;,</span><br><span class="line">    components: [ RootQuery, User, UserImpl, Todo, PonctualTodo, RecurentTodo ],</span><br><span class="line">    providers: [ &#123; token: &apos;UserService&apos;, factory: UserService &#125; ]</span><br><span class="line">&#125; )</span><br><span class="line">export class MySchema extends BaseSchema &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

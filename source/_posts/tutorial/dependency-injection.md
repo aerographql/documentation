@@ -79,10 +79,8 @@ This dependency will be automatically injected into the root query class instanc
 
 *This automatic resolution was possible because the UserService was decorated with he **@Injectable** decorator.*
 
-> ---
 > * To define a dependency simply add a constructor to the desired class, and add to that constructor a parameter matching the desired dependency.  
 > * AeroGraphQL will use the Typescript type annotation to correctly instanciate and inject the dependency.  
-> ---
 
 ** AeroGraphQL DI system is heavily inspired by the [Angular DI system](https://angular.io/guide/dependency-injection) **
 
@@ -115,11 +113,7 @@ export class MySchema extends BaseSchema {
 }
 ```
 
-> ---
-> 
 > We use the **providers** field of the **@Schema** decorator to pass additional provider to the internal Schema Injector
->
-> ---
 
 ### The provider object
 

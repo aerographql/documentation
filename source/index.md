@@ -4,8 +4,7 @@ layout: page
 toc: false
 ---
 
-### Before everything:  
-**AeroGraphQL is not yet ready for production and currently under development.**
+#### **AeroGraphQL is not yet ready for production and currently under development.**
 
 # What is AeroGraphQL ?
 
@@ -22,12 +21,10 @@ toc: false
 
 # What it look like ?
 
-Define your schema types using typescript annotation:
+Define your schema types using Typescript annotation:
 
 ```javaScript
-@ObjectDefinition( {
-    name: 'User'
-} )
+@ObjectDefinition( { name: 'User' } )
 export class UserType {
     @Field( { type: 'ID' } ) id: string;
     @Field( ) name: String;
@@ -35,12 +32,10 @@ export class UserType {
 }
 ```
 
-Implement your resolvers:
+Implement your resolver:
 
 ```typescript
-@ObjectImplementation( {
-    name: 'RootQuery'
-} )
+@ObjectImplementation( { name: 'RootQuery' } )
 export class RootQuery {
 
     constructor( private userService: UserService ) {
@@ -96,7 +91,7 @@ schema {
     query: RootQuery
 }
 ```
-With each resolvers automaticaly wired.
+With each resolvers automaticaly wired to their implementations.
 
 # Where to go next ?
 
