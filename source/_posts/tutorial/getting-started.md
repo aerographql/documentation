@@ -140,7 +140,7 @@ And you'll have a brand new object representing a user, with all it's fields alr
 This will be pretty usefull when implementing complex resolvers later on...
 
 
-## Create the Todo object type
+## Create the Todo object
 
 Using what we already know, let's create the Todo object:
 
@@ -203,7 +203,7 @@ Finally, we use the **@Arg** decorator to define an argument for this field:
 
 At this point the core implementation of this resolver is missing, we will come to that later on.
 
-## Create the RootQuery object type
+## Create the RootQuery object
 ```typescript
 import { Field, ObjectImplementation } from 'aerographql';
 

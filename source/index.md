@@ -11,7 +11,7 @@ toc: false
 > **AeroGraphQL** is a small and opinionated [Typescript](https://www.typescriptlang.org/index.html) toolkit to create [GraphQL](http://graphql.org/learn/) server using a declarative approach.
 
 
-* Define your [GraphQL schema](http://graphql.org/learn/schema/) using Typescript annotations and intergrate seamlessly your [GraphQL resolvers](http://graphql.org/learn/execution/) using those same types, directly in Typescript.
+* Define your [GraphQL schema](http://graphql.org/learn/schema/) using Typescript annotations and integrate seamlessly your [GraphQL resolvers](http://graphql.org/learn/execution/) using those same types, directly in Typescript.
 
 * Use the builtin {% post_link tutorial/middleware middleware mecanism %} to implement authentication, authorization, guards or resolvers logics.
 
