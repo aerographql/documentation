@@ -210,7 +210,7 @@ interface ResolverConfig {
 
 * **type:** Define the return value type of this resolver.  
 If a string is provided it must match a name of a GraphQL object available in the final schema.  
-A reference to a AeroGraphQL annotated class can be passed.  
+A reference to an AeroGraphQL annotated class can be passed.  
 *Default to the type of the attribute infered from Typescript metadata*
 
 * **nullable:** Define whether this field is nullable or not.    
@@ -223,7 +223,7 @@ A reference to a AeroGraphQL annotated class can be passed.
 *Default to null*
 
 * **middlewares:** List of middleware that must be called before executing this Resolver.  
-If middleware were defined at the ObjectImplementation level, they will be overided by those one.  
+**If middleware were defined at the ObjectImplementation level, they will be overided by those one.**  
 *Default to []*
 
 #### @Scalar
@@ -269,7 +269,7 @@ interface SchemaConfig {
 * **rootMutation:** Name of the GraphQL object used as the root mutation.  
 *Default to null*
 
-* **providers:** Additional providers that must be added to the injector stored in this schema. See [this].(http://localhost:4000/documentation/dependency-injection/#Configure-the-injector)  
+* **providers:** Additional providers that must be added to the injector stored in this schema.  
 *Default to []*
 
 * **components:** List of reference to decorated class that are part of this schema.
@@ -297,7 +297,7 @@ interface UnionConfig {
 * **description:** Description associated with this GraphQL union.  
 *Default to null*
 
-* **resolveType:** GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (such as an union). See [this](http://localhost:4000/documentation/interface-and-union/#How-does-it-work).  
+* **resolveType:** GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (such as an union).  
 However if this logic does not suit your needs you can override it by providing this callback.  
 It's role is to convert an input value to a string corresponding to the GraphQL object type name.  
 *Default to null*

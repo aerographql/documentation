@@ -209,7 +209,7 @@
 <p>Apply this decorator on a method of a class decorated with <strong>@ObjectImplementation</strong> to associate it with a GraphQL resolver on the object.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface ResolverConfig &#123;</span><br><span class="line">    type?: string | Function,</span><br><span class="line">    nullable?: boolean,</span><br><span class="line">    list?: boolean,</span><br><span class="line">    description?: string,</span><br><span class="line">    middlewares?: MiddlewareDescriptor[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p><strong>type:</strong> Define the return value type of this resolver.<br>If a string is provided it must match a name of a GraphQL object available in the final schema.<br>A reference to a AeroGraphQL annotated class can be passed.<br><em>Default to the type of the attribute infered from Typescript metadata</em></p>
+<li><p><strong>type:</strong> Define the return value type of this resolver.<br>If a string is provided it must match a name of a GraphQL object available in the final schema.<br>A reference to an AeroGraphQL annotated class can be passed.<br><em>Default to the type of the attribute infered from Typescript metadata</em></p>
 </li>
 <li><p><strong>nullable:</strong> Define whether this field is nullable or not.<br><em>Default to false</em></p>
 </li>
@@ -217,7 +217,7 @@
 </li>
 <li><p><strong>description:</strong> Description associated with this GraphQL resolver.<br><em>Default to null</em></p>
 </li>
-<li><p><strong>middlewares:</strong> List of middleware that must be called before executing this Resolver.<br>If middleware were defined at the ObjectImplementation level, they will be overided by those one.<br><em>Default to []</em></p>
+<li><p><strong>middlewares:</strong> List of middleware that must be called before executing this Resolver.<br><strong>If middleware were defined at the ObjectImplementation level, they will be overided by those one.</strong><br><em>Default to []</em></p>
 </li>
 </ul>
 <h4 id="Scalar"><a href="#Scalar" class="headerlink" title="@Scalar"></a>@Scalar</h4><p><code>@Scalar( config: ScalarConfig )</code></p>
@@ -239,7 +239,7 @@
 </li>
 <li><p><strong>rootMutation:</strong> Name of the GraphQL object used as the root mutation.<br><em>Default to null</em></p>
 </li>
-<li><p><strong>providers:</strong> Additional providers that must be added to the injector stored in this schema. See [this].(<a href="http://localhost:4000/documentation/dependency-injection/#Configure-the-injector" target="_blank" rel="noopener">http://localhost:4000/documentation/dependency-injection/#Configure-the-injector</a>)<br><em>Default to []</em></p>
+<li><p><strong>providers:</strong> Additional providers that must be added to the injector stored in this schema.<br><em>Default to []</em></p>
 </li>
 <li><p><strong>components:</strong> List of reference to decorated class that are part of this schema.</p>
 </li>
@@ -254,7 +254,7 @@
 </li>
 <li><p><strong>description:</strong> Description associated with this GraphQL union.<br><em>Default to null</em></p>
 </li>
-<li><p><strong>resolveType:</strong> GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (such as an union). See <a href="http://localhost:4000/documentation/interface-and-union/#How-does-it-work" target="_blank" rel="noopener">this</a>.<br>However if this logic does not suit your needs you can override it by providing this callback.<br>It’s role is to convert an input value to a string corresponding to the GraphQL object type name.<br><em>Default to null</em></p>
+<li><p><strong>resolveType:</strong> GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (such as an union).<br>However if this logic does not suit your needs you can override it by providing this callback.<br>It’s role is to convert an input value to a string corresponding to the GraphQL object type name.<br><em>Default to null</em></p>
 </li>
 </ul>
 <h2 id="Interfaces"><a href="#Interfaces" class="headerlink" title="Interfaces"></a>Interfaces</h2><h4 id="MiddlewareDescriptor"><a href="#MiddlewareDescriptor" class="headerlink" title="MiddlewareDescriptor"></a>MiddlewareDescriptor</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> MiddlewareDescriptor &#123;</span><br><span class="line">    middleware: <span class="built_in">Function</span>;</span><br><span class="line">    options?: <span class="built_in">any</span>;</span><br><span class="line">    resultName?: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

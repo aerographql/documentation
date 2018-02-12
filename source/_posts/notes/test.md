@@ -4,7 +4,7 @@ layout: page
 toc: true
 ---
 
-# Using tests tools
+# Using tests utilities
 
 AeroGraphQL provide several tools and utilities to help you when writting unit tests.
 

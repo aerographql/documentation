@@ -15,7 +15,7 @@ toc: false
 
 * Use the builtin {% post_link tutorial/middleware middleware mecanism %} to implement authentication, authorization, guards or resolvers logics.
 
-* Organize and test your code easily with the provided {% post_link tutorial/dependency-injection dependency Injection %} system and the test utilities.
+* Organize and test your code easily with the provided {% post_link tutorial/dependency-injection dependency Injection %} system and the {% post_link notes/test test utilities %}.
 
 * Run your server using any GraphQL server, like the well known [Apollo Server](https://www.apollographql.com/docs/apollo-server/).
 
