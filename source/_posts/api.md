@@ -352,6 +352,48 @@ See [this medium post](https://medium.com/graphql-mastery/how-to-design-graphql-
 
 ## Class
 
+#### ID
+```typescript
+class ID extends String { }
+```
+Use this class when defining fields to avoid the need to explictly specify type information:
+```typescript
+// With explicit type information
+@Field({type: 'ID' }) id: string;
+
+// With implicit type information
+import { ID } from 'aerographql';
+@Field() id: ID;
+```
+
+#### Float
+```typescript
+class Float extends Number { }
+```
+Use this class when defining fields to avoid the need to explictly specify type information:
+```typescript
+// With explicit type information
+@Field({type: 'Float' }) id: number;
+
+// With implicit type information
+import { Float } from 'aerographql';
+@Field() floatField: Float;
+```
+
+#### Int
+```typescript
+class Int extends Number { }
+```
+Use this class when defining fields to avoid the need to explictly specify type information:
+```typescript
+// With explicit type information
+@Field({type: 'Int' }) id: number;
+
+// With implicit type information
+import { Int } from 'aerographql';
+@Field() intField: Int;
+```
+
 #### BaseSchema
 
 ```typescript
