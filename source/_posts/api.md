@@ -174,7 +174,7 @@ interface ObjectDefinitionConfig {
 }
 
 export interface MiddlewareDescriptor {
-    provider: Function;
+    middleware: Function;
     options?: any;
     resultName?: string;
 }
@@ -191,9 +191,6 @@ export interface MiddlewareDescriptor {
 
 * **middlewares:** List of middleware that must be called before executing a resolver in thi ObjectImplementation.  
 *Default to []*
-    * **provider** is the class constructor for the desired middleware  
-    * **options** Option passed to the middleware  
-    * **resultName** A field name reachable in the GraphQL context, where the result of this middleware will be stored   
 
 #### @Resolver
 
@@ -307,6 +304,22 @@ It's role is to convert an input value to a string corresponding to the GraphQL 
 
 ## Interfaces
 
+#### MiddlewareDescriptor
+
+```typescript
+interface MiddlewareDescriptor {
+    middleware: Function;
+    options?: any;
+    resultName?: string;
+}
+```
+
+Use this interface to provide informations about how to use a Middleware in either an **@ObjectImplementation** an **@Resolver** or with the **executeMiddlewares** test function.
+
+* **middleware** The middleware class associated
+* **options** Optional value passed as the fourth parameter of the middleware execute function
+* **resultName** Specify where to store the middleware result in the current GraphQL context. If not specified, result won't be saved.
+
 #### MiddlewareInterface
 
 ```typescript
@@ -314,6 +327,14 @@ interface MiddlewareInterface<T=any> {
     execute( src: any, args: any, context: any, options: any ): T | Promise<T>;
 }
 ```
+
+Base interface for each Middleware.
+
+The execute function take four parameters:
+* **src** The previous object, which for a field on the root Query type is often not used.
+* **arg** The arguments provided in the current GraphQL request.
+* **context** The GraphQL context object. Note the when multiple Middleware are executed sequentialy, you can check the content of the context for result of previous middleware.
+* **options** The option object passed to the **MiddlewareDescriptor** if any.
 
 #### ScalarInterface
 
@@ -402,7 +423,7 @@ it( 'should store middlewares results', () => {
     }
 
     let descs: MiddlewareDescriptor[] = [
-        { provider: MA,  resultName: 'A' }
+        { middleware: MA,  resultName: 'A' }
     ];
     let context: any = {};
     let p = executeMiddlewares( descs, { context } ).then( ( result ) => {

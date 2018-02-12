@@ -130,7 +130,26 @@
 <main class="app-body flex-box">
     <article class="post-article">
         <section class="markdown-content">
-            <p>Todo</p>
+            <h1 id="Using-tests-tools"><a href="#Using-tests-tools" class="headerlink" title="Using tests tools"></a>Using tests tools</h1><p>AeroGraphQL provide several tools and utilities to help you when writting unit tests.</p>
+<p>Those tools relies on other npm packages that are not installed by default with AeroGraphQL:</p>
+<ul>
+<li><strong>node-mocks-http</strong></li>
+<li><strong>apollo-server-express</strong></li>
+</ul>
+<blockquote>
+<p>When writting unit tests, please be sure to install those packages beforehand</p>
+</blockquote>
+<p>Each testing tools can be imported using the following import statement:<br><code>import * as Test from &quot;aerographql/dist/test&quot;;</code></p>
+<blockquote>
+<p>In the following example we are using <a href="https://facebook.github.io/jest/" target="_blank" rel="noopener">Jest</a> as our testing library along with <a href="https://github.com/kulshekhar/ts-jest" target="_blank" rel="noopener">ts-jest</a> </p>
+</blockquote>
+<h2 id="Testing-Middleware"><a href="#Testing-Middleware" class="headerlink" title="Testing Middleware"></a>Testing Middleware</h2><p>To test middleware in isolation, use the <strong>executeMiddlewares</strong> tools.</p>
+<p>It’s signature is:<br><code>function executeMiddlewares(descs: MiddlewareDescriptor[], args?: ExecuteMiddlewaresArgs, additionalProviders?: (Function | Provider)[]): Promise&lt;any[]&gt;;</code></p>
+<p><strong>example:</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; MiddlewareDescriptor, Middleware, MiddlewareInterface, &#125; <span class="keyword">from</span> <span class="string">'./middleware'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Test <span class="keyword">from</span> <span class="string">'aerographql/dist/test'</span>;</span><br><span class="line"></span><br><span class="line">it( <span class="string">'should return the right value inthe context'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Middleware</span>()</span><br><span class="line">    <span class="keyword">class</span> MA <span class="keyword">implements</span> MiddlewareInterface&lt;<span class="built_in">string</span>&gt; &#123;</span><br><span class="line">        execute( src: <span class="built_in">any</span>, args: <span class="built_in">any</span>, context: <span class="built_in">any</span>, options: <span class="built_in">any</span> ) &#123; <span class="keyword">return</span> <span class="string">'A'</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> descs: MiddlewareDescriptor[] = [ &#123; middleware: MA, options: <span class="string">'Options'</span>, resultName: <span class="string">'result'</span> &#125; ];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> context:<span class="built_in">any</span> = &#123;&#125;;</span><br><span class="line">    <span class="keyword">let</span> p = Test.executeMiddlewares( descs, &#123; context &#125; ).then( <span class="function">(<span class="params"> r </span>) =&gt;</span> &#123;</span><br><span class="line">        expect( context ).toHaveProperty( <span class="string">'result'</span>);</span><br><span class="line">        expect( context.result ).toEqual( <span class="string">'A'</span> )</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125; );</span><br><span class="line">    <span class="keyword">return</span> expect( p ).resolves.toBeTruthy();</span><br><span class="line"></span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></p>
+<p>Here we want to test the <strong>MA</strong> middleware and ensure that it return the correct return value.</p>
+<p>To do that, we provide the <strong>executeMiddlewares</strong> a list of <strong>MiddlewareDescriptor</strong> and a context object which will be passed down to the middleware execute function.</p>
+<p>The <strong>executeMiddlewares</strong> return a Promise that we will use to check the result of the context after execution of the middleware.</p>
+<p>Note that we pass the <strong>resultName</strong> option to the descriptor in order to specify where to store the middleware result in the context.</p>
 
         </section>
     </article>
@@ -139,7 +158,7 @@
   <div class="toc-main">
     <strong class="toc-title">Content</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Using-tests-tools"><span class="toc-nav-text">Using tests tools</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Testing-Middleware"><span class="toc-nav-text">Testing Middleware</span></a></li></ol></li></ol>
     
   </div>
 </aside>

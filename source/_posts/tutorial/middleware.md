@@ -81,7 +81,7 @@ export class RootQuery {
         return this.userService.find( name );
     }
 
-    @Resolver( { type: User, nullable: true, middlewares: [ { provider: AuthMiddleware } ] } )
+    @Resolver( { type: User, nullable: true, middlewares: [ { middleware: AuthMiddleware } ] } )
     viewer( ) {
         return null;
     }
@@ -197,7 +197,7 @@ export class RootQuery {
         return this.userService.find( name );
     }
 
-    @Resolver( { type: User, nullable: true, middlewares: [ { provider: AuthMiddleware, resultName: 'user' } ] } )
+    @Resolver( { type: User, nullable: true, middlewares: [ { middleware: AuthMiddleware, resultName: 'user' } ] } )
     viewer( previous: any, context:Context ) {
         return context.user;
     }
