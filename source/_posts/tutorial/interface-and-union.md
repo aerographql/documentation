@@ -158,24 +158,12 @@ which should return:
 
 ## How does it work ?
 
-If you have experiences with GraphQL you might be asking, but you do we guess the type of each particular items ?  
+If you have experiences with plain GraphQL you might be asking you do we guess the type of each particular items ?  
 After all they are just plain Javascript object, without anything special...
 
 Well AeroGraphQL add it's own logic to deduce the Type of a given object.
 
-It will try several approach to guess it:
-
-1. If the returned value was created using the **new operator** on an object annotated with either @ObjectDefinition or @ObjectImplementation, then AeroGraphQL will look for specific metadata to infer the type.
-
-2. If ther returned value was a literal javascript object, AeroGraphQL will look for a special field called **__typename** containing ... the type name
-
-3. If the __typename does not exits, AeroGraphQL will look for a **customResolveType** field in the **@Interface** or **@Union** decorator configuration for a function with the following signature: `type ResolveTypeFunction = ( value: any, context: any, info: any ) => string;`.  
-The implementer should write the function with the approriate logic to detect the object type from the *value* parameter
-
-4. And finally, if neither **__typename** nor **customResolveType** was provided, AeroGraphQL will use a simple heuristic to find it's type by analyzing the shape of each type implementing a common interface and by finding a unique field on each type that could be used as a discriminant to infer the object's type.  
-This is what happen here.  
-*This is one point that make AeroGraphQL easy to use*
-**This computation happen at Startup, so there is nearly zero overhead for that.**
+Checkout {% post_link notes/resolve-type this page on resolveType function %} for more informations.
 
 ## What's next
 

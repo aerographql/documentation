@@ -12,7 +12,7 @@ AeroGraphQL define:
 * **@Interface()** to create a GraphQL interface
 * **@Scalar()** to create a GraphQL scalar
 * **@Input()** to create a GraphQL input
-* **@Uniont()** to create a GraphQL union
+* **@Union()** to create a GraphQL union
 
 But to create a GraphQL object AeroGraphQL provide two decorators:
 * **@ObjectDefinition** 
@@ -22,10 +22,10 @@ We recap here what are their differences and how they work together to create a 
 
 ## GraphQL object's structure:
 
-The Final GraphQL Object's structure as exposed by the schema is:  
-**the union of each fields and each resolvers defined in every @ObjectDefinition and @ObjectImplementation class sharing the same GraphQL name**
+> The Final GraphQL Object's structure as exposed by the schema is 
+> **the union of each fields and each resolvers defined in every @ObjectDefinition and @ObjectImplementation class sharing the same GraphQL name**
 
-> Both decorators must be provided with a configuration object. This object contain a **name** field which identify GraphQL object the class refers to:
+> Both decorators must be provided with a configuration object. This configuration contain a **name** field which specify the name of the GraphQL object this class will refers to:
 ```typescript
 @ObjectDefinition( { name: 'User' } )
 export class User { ... } 

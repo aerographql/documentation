@@ -136,7 +136,7 @@
 <li><strong>@Interface()</strong> to create a GraphQL interface</li>
 <li><strong>@Scalar()</strong> to create a GraphQL scalar</li>
 <li><strong>@Input()</strong> to create a GraphQL input</li>
-<li><strong>@Uniont()</strong> to create a GraphQL union</li>
+<li><strong>@Union()</strong> to create a GraphQL union</li>
 </ul>
 <p>But to create a GraphQL object AeroGraphQL provide two decorators:</p>
 <ul>
@@ -144,9 +144,9 @@
 <li><strong>@ObjectImplementation</strong></li>
 </ul>
 <p>We recap here what are their differences and how they work together to create a full GraphQL object:</p>
-<h2 id="GraphQL-object’s-structure"><a href="#GraphQL-object’s-structure" class="headerlink" title="GraphQL object’s structure:"></a>GraphQL object’s structure:</h2><p>The Final GraphQL Object’s structure as exposed by the schema is:<br><strong>the union of each fields and each resolvers defined in every @ObjectDefinition and @ObjectImplementation class sharing the same GraphQL name</strong></p>
-<blockquote>
-<p>Both decorators must be provided with a configuration object. This object contain a <strong>name</strong> field which identify GraphQL object the class refers to:<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ObjectDefinition</span>( &#123; name: <span class="string">'User'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> User &#123; ... &#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">@ObjectImplementation</span>( &#123; name: <span class="string">'User'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UserImpl &#123; ... &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="GraphQL-object’s-structure"><a href="#GraphQL-object’s-structure" class="headerlink" title="GraphQL object’s structure:"></a>GraphQL object’s structure:</h2><blockquote>
+<p>The Final GraphQL Object’s structure as exposed by the schema is<br><strong>the union of each fields and each resolvers defined in every @ObjectDefinition and @ObjectImplementation class sharing the same GraphQL name</strong></p>
+<p>Both decorators must be provided with a configuration object. This configuration contain a <strong>name</strong> field which specify the name of the GraphQL object this class will refers to:<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ObjectDefinition</span>( &#123; name: <span class="string">'User'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> User &#123; ... &#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">@ObjectImplementation</span>( &#123; name: <span class="string">'User'</span> &#125; )</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UserImpl &#123; ... &#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <h2 id="Fields-and-Resolvers"><a href="#Fields-and-Resolvers" class="headerlink" title="Fields and Resolvers"></a>Fields and Resolvers</h2><p>In GraphQL terms:</p>
 <ul>

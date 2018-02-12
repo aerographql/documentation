@@ -130,7 +130,47 @@
 <main class="app-body flex-box">
     <article class="post-article">
         <section class="markdown-content">
-            <p>Todo</p>
+            <h1 id="Polymorphic-types"><a href="#Polymorphic-types" class="headerlink" title="Polymorphic types"></a>Polymorphic types</h1><p>The GraphQL spec allow to create polymorphic types.<br>By polymorphic types we mean a single type that can have different shapes, this could be:</p>
+<ul>
+<li>A <strong>Union</strong></li>
+<li>Or an <strong>Interface</strong></li>
+</ul>
+<p>When an AeroGraphQL resolver is returning a Polymorphic type, GraphQL need to know how to infer the type of the concrete object behind this Polymorphic one.</p>
+<p>To do that, we use a dedicated function called the <strong>resolveType</strong> function, with the following signature:<br><code>type ResolveTypeFunction = ( value: any, context: any, info: any ) =&gt; string</code></p>
+<p>The goal of this method is to return a string matching the type name of the input value.</p>
+<p>It’s parameters are:</p>
+<ul>
+<li><strong>value</strong> The object on which we are trying to find the concrete type</li>
+<li><strong>context</strong> The context object associated with this request</li>
+<li><strong>info</strong> The GraphQL specification for this particular field</li>
+</ul>
+<blockquote>
+<p>Whith a plain GraphQL implementation, it’s up to the user to implement this method when necessary.<br><strong>AeroGraphQL provide a default implementation of it which work in most situtations.</strong></p>
+</blockquote>
+<h1 id="Default-resolveType"><a href="#Default-resolveType" class="headerlink" title="Default resolveType"></a>Default resolveType</h1><p>The default AeroGraphQL implementation of the resolveType function works as follow:</p>
+<ol>
+<li><p>AeroGraphQL will try to infer the type by looking at Metadata associated with the object:<br>If the <em>value</em> object was created using the <strong>new operator</strong> on a type annotated with AeroGraphQL decorators (@ObjectDefinition, @ObjectImplementation…) , then metadata are availables which contains the type name of this object.<br>But what happen if the object was not created using the new operator ?</p>
+</li>
+<li><p>AeroGraphQL will look for a field <strong>__typename</strong> on the object which contain the object type name.</p>
+</li>
+<li><p>If this field does not exist, AeroGraphQL will try to infer the type using the following heuristic:  </p>
+<blockquote>
+<p>For each concrete type of the polymorphic one, it will search for a field which only exist in a single concrete type and use this type as a discriminant to infer the concrete type.  </p>
+</blockquote>
+</li>
+</ol>
+<p><strong>example:</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Interface</span>( &#123; name: <span class="string">'InterfaceA'</span>, description: <span class="string">'Desc'</span>, &#125; )</span><br><span class="line"><span class="keyword">class</span> InterfaceA &#123;</span><br><span class="line">    <span class="meta">@Field</span>( &#123; <span class="keyword">type</span>: <span class="string">'Int'</span> &#125; ) fieldA: <span class="built_in">number</span>;</span><br><span class="line">    <span class="meta">@Field</span>( &#123; <span class="keyword">type</span>: <span class="string">'String'</span> &#125; ) fieldB: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ObjectDefinition</span>( &#123; name: <span class="string">'TestType1'</span>, <span class="keyword">implements</span>: [ InterfaceA ] &#125; )</span><br><span class="line"><span class="keyword">class</span> TypeA &#123;</span><br><span class="line">    <span class="meta">@Field</span>( &#123; <span class="keyword">type</span>: <span class="string">'Int'</span> &#125; ) fieldA: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="meta">@Field</span>() fieldB: <span class="built_in">string</span> = <span class="string">"String"</span>;</span><br><span class="line">    <span class="meta">@Field</span>() fieldC: <span class="built_in">string</span> = <span class="string">"String"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ObjectDefinition</span>( &#123; name: <span class="string">'TestType2'</span>, <span class="keyword">implements</span>: [ InterfaceA ] &#125; )</span><br><span class="line"><span class="keyword">class</span> TypeB &#123;</span><br><span class="line">    <span class="meta">@Field</span>( &#123; <span class="keyword">type</span>: <span class="string">'Int'</span> &#125; ) fieldA: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="meta">@Field</span>() fieldB: <span class="built_in">string</span> = <span class="string">"String"</span>;</span><br><span class="line">    <span class="meta">@Field</span>() fieldD: <span class="built_in">number</span> = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>If a field return an <strong>InterfaceA</strong> and the actual object contain a field name <strong>fieldC</strong>, then AeroGraphQL will infer that it’s of concrete type <strong>TestType1</strong>.  </li>
+<li>If a field return an <strong>InterfaceA</strong> and the actual object contain a field name <strong>fieldD</strong>, then AeroGraphQL will infer that it’s of concrete type <strong>TestType2</strong>.  </li>
+</ul>
+<p><strong>All of the computation needed to determine the discriminant field happen at startup time, so there is nearly zero overhead when using the default implementation of the resolveType</strong></p>
+<h1 id="Custom-resolveType"><a href="#Custom-resolveType" class="headerlink" title="Custom resolveType"></a>Custom resolveType</h1><p>Obviously this approach will not work everytime.<br>If you need a more sophisticated approach you can override the default <strong>resolveType</strong> function with a custom one.</p>
+<p>You can do that when defining interfaces or unions by passing a custom function fo the <strong>resolveType</strong> field of the configuration object.<br>Checkout the API reference for:</p>
+<ul>
+<li><a href="https://aerographql.github.io/documentation/api/#Interface">Interface</a></li>
+<li><a href="https://aerographql.github.io/documentation/api/#Union">Union</a></li>
+</ul>
 
         </section>
     </article>
@@ -139,7 +179,7 @@
   <div class="toc-main">
     <strong class="toc-title">Content</strong>
     
-      <ol class="nav">none</ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Polymorphic-types"><span class="toc-nav-text">Polymorphic types</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Default-resolveType"><span class="toc-nav-text">Default resolveType</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Custom-resolveType"><span class="toc-nav-text">Custom resolveType</span></a></li></ol>
     
   </div>
 </aside>
