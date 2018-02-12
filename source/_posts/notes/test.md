@@ -57,3 +57,37 @@ To do that, we provide the **executeMiddlewares** a list of **MiddlewareDescript
 The **executeMiddlewares** return a Promise that we will use to check the result of the context after execution of the middleware.
 
 Note that we pass the **resultName** option to the descriptor in order to specify where to store the middleware result in the context.
+
+## Testing end to end queries
+
+The **TestServer** class allow you to test a whole AeroGraphQL schema by providing you a way to execute fake GraphQL requests over a server and to examine their results.
+
+```typescript
+@ObjectDefinition( )
+class TestType1 {
+    @Field( { type: 'Int' } ) fieldA: number = 0;
+    @Field() fieldB: string = "String";
+}
+
+@ObjectImplementation( )
+class TestRootQuery {
+    @Resolver( { type: TestType1 } )
+    query1( parent: any, context: any ) {
+        return new TestType1();
+    }
+}
+@Schema( { rootQuery: 'TestRootQuery', components: [ TestRootQuery, TestType1 ] } )
+class TestSchema extends BaseSchema {}
+
+it( 'should work with simple query', () => {
+    let s = new TestServer( schema );
+    return expect( s.execute( `{ query1 { fieldA fieldB  } }` ) ).resolves.toEqual( { data: { query1: { fieldA: 0, fieldB: "String" } } } )
+} )
+```
+
+Here, first we create a dummy AeroGraphQL Schema with a root query type returning instance of an other simple type.
+
+It the jest test, we create a new **TestServer** associated with this dummy schema.  
+Then we use the **TestServer.execute()** method on the **TestServer** to execute a GraphQL query on this schema.  
+
+**TestServer.execute()** return a Promise, wa assume that it should resolve to the expected result, and that's it ! 

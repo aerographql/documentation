@@ -120,7 +120,7 @@ type ResolveTypeFunction = ( value: any, context: any, info: any ) => string;
 * **description:** Description associated with this GraphQL interface.  
 *Default to null*
 
-* **resolveType:** GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (like an interface). (see [this](http://localhost:4000/documentation/interface-and-union/#How-does-it-work))  
+* **resolveType:** GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (like an interface). See [this](http://localhost:4000/documentation/interface-and-union/#How-does-it-work).  
 However if this logic does not suit your needs you can override it by providing this callback.  
 It's role is to convert an input value to a string corresponding to the GraphQL object type name.  
 *Default to null*
@@ -269,7 +269,7 @@ interface SchemaConfig {
 * **rootMutation:** Name of the GraphQL object used as the root mutation.  
 *Default to null*
 
-* **providers:** Additional providers that must be added to the injector stored in this schema. See [this](http://localhost:4000/documentation/dependency-injection/#Configure-the-injector)  
+* **providers:** Additional providers that must be added to the injector stored in this schema. See [this].(http://localhost:4000/documentation/dependency-injection/#Configure-the-injector)  
 *Default to []*
 
 * **components:** List of reference to decorated class that are part of this schema.
@@ -289,15 +289,15 @@ interface UnionConfig {
 }
 ```
 
-* **name:** Name of this union in the GraphQL schema  
+* **name:** Name of this union in the GraphQL schema.  
 *Default to the name of the class decorated*
 
-* **types:** List of reference to class that are members of this union
+* **types:** List of reference to class that are members of this union.
 
 * **description:** Description associated with this GraphQL union.  
 *Default to null*
 
-* **resolveType:** GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (such as an union). (see [this](http://localhost:4000/documentation/interface-and-union/#How-does-it-work))  
+* **resolveType:** GraphQL use a custom logic to deduce the type of an object when a field return a polymorphic type (such as an union). See [this](http://localhost:4000/documentation/interface-and-union/#How-does-it-work).  
 However if this logic does not suit your needs you can override it by providing this callback.  
 It's role is to convert an input value to a string corresponding to the GraphQL object type name.  
 *Default to null*
