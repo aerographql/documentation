@@ -61,10 +61,5 @@
     } else {
       top.removeClass('opacity')
     }
-    if (scrollTop > 190) {
-      catalog.addClass('fixed-toc')
-    } else {
-      catalog.removeClass('fixed-toc')
-    }
   })
 })(jQuery)
