@@ -103,6 +103,12 @@ pre {
   margin-top: 0;
   width: 100%;
 }
+.anchor {
+  display: block;
+  position: relative;
+  top: -100px;
+  visibility: hidden;
+}
 .image-view-wrap {
   position: fixed;
   top: 0;
@@ -460,6 +466,8 @@ pre {
 .catalog-container .fixed-toc {
   position: fixed;
   top: 120px;
+  bottom: 0px;
+  overflow-y: auto;
 }
 .catalog-container .toc-main {
   padding-left: 20px;
