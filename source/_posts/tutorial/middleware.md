@@ -59,14 +59,14 @@ The key points here are:
 > The MiddlewareInterface interface take a Generic parameter that represent the type returned by the middleware.
 
 Let's have a look at the signature of the **execute** function:  
-It's take four parameters.  
-The first three ones should looks familiar:
+It take four parameters.  
+* The first three ones should looks familiar:
 **src, args, context** are the standard parameters passed to any [GraphQL resolver functions](http://graphql.org/learn/execution/#root-fields-resolvers)  
-The **options** parameter is specific to AeroGraphQL middleware, and is used to customize the behavior of each middleware. More on that soon...
+* The **options** parameter is specific to AeroGraphQL middleware, and is used to customize the behavior of each middleware. More on that soon...
 
 ## Use it
 
-Now that we have our middleware we need to use it.  
+Now that we have our middleware we can use it.  
 In our case we like to call this middleware on a new endpoint: **viewer** which will return the currently logged in user if any (the viewer term come from the [relay terminology](https://www.learnrelay.org/queries/what-is-a-query/))
 
 Change our RootQuery implementation:
